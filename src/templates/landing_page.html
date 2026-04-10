@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}The Nexus{% endblock %}
+
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+
+{% block main %}
+<nav
+        class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm shadow-blue-900/5 flex justify-between items-center px-6 py-3 w-full">
+        <div class="flex items-center gap-4">
+            <button type="button" data-sidebar-open aria-label="Menyu"
+                class="active:scale-95 duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-colors p-2 rounded-full">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-400">menu</span>
+            </button>
+            <span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 font-headline">The
+                Nexus</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="text-blue-700 font-bold font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% url 'landing_page' %}">Bosh sahifa</a>
+            <a class="text-slate-500 font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% if request.user.is_authenticated %}{% url 'job_list' %}{% else %}{% url 'register' %}{% endif %}">Ishlar</a>
+            <a class="text-slate-500 font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% if request.user.is_authenticated %}{% url 'inbox' %}{% else %}{% url 'register' %}{% endif %}">Xabarlar</a>
+        </div>
+        <div class="flex items-center gap-3">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'profile_settings' %}" class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/10 bg-surface-container-low"
+                aria-label="Profil">
+                {% if request.user.avatar %}
+                <img class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" alt="Profil rasmi">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-outline">
+                    <span class="material-symbols-outlined">person</span>
+                </div>
+                {% endif %}
+            </a>
+            {% else %}
+            <a class="text-slate-500 hover:text-blue-700 text-sm font-semibold" href="{% url 'login' %}">Kirish</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="pt-20 pb-24">
+        <section class="relative px-6 py-16 md:py-28 overflow-hidden">
+            <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="z-10">
+                    <h1
+                        class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter leading-tight text-on-surface mb-6">
+                        Ishning <span
+                            class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">kelajagini</span>
+                        yaratamiz.
+                    </h1>
+                    <p class="text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed font-body">
+                        Saralangan freelancerlar bilan ishlang. Ortiqcha shovqin yo‘q — faqat samarali hamkorlik.
+                    </p>
+                    <div class="relative max-w-2xl group">
+                        <div class="absolute inset-0 bg-primary/5 blur-2xl rounded-full"></div>
+                        <div
+                            class="relative flex items-center bg-surface-container-lowest p-2 rounded-full shadow-xl shadow-blue-900/5 ring-1 ring-outline-variant/10">
+                            <span class="material-symbols-outlined ml-4 text-outline">search</span>
+                            <input
+                                class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-outline/60 px-4 py-3 font-body"
+                                placeholder="Freelancer yoki loyiha qidiring..." type="text" />
+                            <button
+                                class="bg-primary text-on-primary px-8 py-3 rounded-full font-headline font-bold text-sm tracking-wide active:scale-95 transition-transform">
+                                Freelancer topish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative hidden md:block">
+                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-primary-container/20 rounded-full blur-3xl">
+                    </div>
+                    <div class="relative z-10 rounded-3xl overflow-hidden aspect-square shadow-2xl">
+                        <img alt="Modern Workspace" class="w-full h-full object-cover"
+                            data-alt="Interior of a minimalist high-end architectural office with glass walls, soft morning sunlight, and clean wooden surfaces"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6-wz9V73uf-vyhIyzQGS4dNO3m462K0-fIW5ha1PLBAFWJRpecMkOQQR56bMAGtM8mGWn3XdV_iBcDZ9q2WLD7Vd3jDFCXjmeLR9-QInZWC2s0uXTOmEI9IqwwJcvAu0txPg3MQb4IckfQyrS1sf9yvtizyfrlSJAXG7KfI8dYZAgjALcgWJF4K4xDrwrj7cGpBfX6uenzAHcRbQtjI-B0D8ayOGYyMxaAbbI-EdL9MSUijOzwUSTfe-B7bt9tCIeVfNKdhDKiuw" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-12 bg-surface-container-low">
+            <div class="px-6 mb-8 flex justify-between items-end max-w-7xl mx-auto">
+                <div>
+                    <h2 class="text-3xl font-headline font-bold tracking-tight">Yo‘nalishlar</h2>
+                    <p class="text-on-surface-variant font-body">Turli sohalar bo‘yicha mutaxassislar.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="p-2 rounded-full bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary transition-colors">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <button
+                        class="p-2 rounded-full bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary transition-colors">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-6 px-6 no-scrollbar max-w-7xl mx-auto">
+                <div
+                    class="flex-none w-64 p-6 rounded-xl bg-surface-container-lowest group hover:bg-primary transition-colors duration-300">
+                    <span
+                        class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-4">architecture</span>
+                    <h3 class="font-headline font-bold text-lg group-hover:text-on-primary">System Design</h3>
+                    <p class="text-sm text-on-surface-variant group-hover:text-on-primary/80 mt-2">124 ta mutaxassis
+                    </p>
+                </div>
+                <div
+                    class="flex-none w-64 p-6 rounded-xl bg-surface-container-lowest group hover:bg-primary transition-colors duration-300">
+                    <span
+                        class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-4">palette</span>
+                    <h3 class="font-headline font-bold text-lg group-hover:text-on-primary">Visual Identity</h3>
+                    <p class="text-sm text-on-surface-variant group-hover:text-on-primary/80 mt-2">89 ta mutaxassis
+                    </p>
+                </div>
+                <div
+                    class="flex-none w-64 p-6 rounded-xl bg-surface-container-lowest group hover:bg-primary transition-colors duration-300">
+                    <span
+                        class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-4">terminal</span>
+                    <h3 class="font-headline font-bold text-lg group-hover:text-on-primary">Core Engineering</h3>
+                    <p class="text-sm text-on-surface-variant group-hover:text-on-primary/80 mt-2">210 ta dasturchi</p>
+                </div>
+                <div
+                    class="flex-none w-64 p-6 rounded-xl bg-surface-container-lowest group hover:bg-primary transition-colors duration-300">
+                    <span
+                        class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-4">insights</span>
+                    <h3 class="font-headline font-bold text-lg group-hover:text-on-primary">Market Intelligence</h3>
+                    <p class="text-sm text-on-surface-variant group-hover:text-on-primary/80 mt-2">56 ta analitik
+                    </p>
+                </div>
+                <div
+                    class="flex-none w-64 p-6 rounded-xl bg-surface-container-lowest group hover:bg-primary transition-colors duration-300">
+                    <span
+                        class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-4">account_balance</span>
+                    <h3 class="font-headline font-bold text-lg group-hover:text-on-primary">Legal Ops</h3>
+                    <p class="text-sm text-on-surface-variant group-hover:text-on-primary/80 mt-2">34 ta mutaxassis</p>
+                </div>
+            </div>
+        </section>
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-headline font-extrabold tracking-tight mb-4">The Nexus jamoasi</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto font-body">Eng yuqori baholangan freelancerlar.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="bg-surface-container-lowest p-8 rounded-xl group hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <div
+                            class="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:blur-2xl transition-all">
+                        </div>
+                        <img alt="Alex Rivera"
+                            class="w-32 h-32 rounded-full object-cover relative z-10 border-4 border-white shadow-lg"
+                            data-alt="Portrait of a male designer with stylish glasses and a black turtleneck, soft focus office background"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGmw5LHsuXsy0igQ5phDZwYqUUdCti6LvLU5RQ2wmtyDswfWvZVdRzO__Y5l3OdwLRI2TnXfxnJOkvUvDBi6OxFIM498sHaaZ1sscwW6mTAgEXjJHIbl4MZD6HetRVGnvhq726GoEunXJYablnOd-e_5Rpw1iPRqWFd90EYUahSx7L1qDBvGzp9TnTGXQ454vSZOX-tnLOsRpbS2JjU30LZD34VA--sDgTpVm1O6zvf_I23TNdbRU6TQ75TAzf_PjTsMgAehTwokk" />
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-headline font-bold">Alex Rivera</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-widest font-label">Principal UI
+                            Architect</p>
+                    </div>
+                    <div class="flex items-center gap-1 mb-6">
+                        <span class="material-symbols-outlined text-secondary text-sm"
+                            style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="font-bold text-on-surface">4.9</span>
+                        <span class="text-outline text-sm">(124 Projects)</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-2 mb-8">
+                        <span
+                            class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">Systems</span>
+                        <span
+                            class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">Fintech</span>
+                    </div>
+                    <button
+                        class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-on-primary transition-all active:scale-95">Portfolioni
+                        ko‘rish</button>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-8 rounded-xl group hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <div
+                            class="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:blur-2xl transition-all">
+                        </div>
+                        <img alt="Elena Vance"
+                            class="w-32 h-32 rounded-full object-cover relative z-10 border-4 border-white shadow-lg"
+                            data-alt="Confident woman in a professional blazer smiling, clean studio lighting, high-end editorial feel"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOXFMVK8q7cYF0wTp-ykAyRWa8UFETXflQAN9cTOMI-wX8K3cr9Vmgg7UfKRlhen1pNlhDciwJzMgkABHRMKsNkVbvXRFbgIkXaccXfTvAeMZEgUf_e_8QkM7MKR9LMwusT3KqKxyADON3wTc0rLkodCG9Cbjo_K82jnERakBE7Pl8cuI9BIjtqYfQ9brt8ZGk54MkVYxPB8TOBf8w9fu4v5p-dCQaeD2-GQMj1jsXRkRi1zp54maJfUU7xkBPMDppUG7q3RWekPg" />
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-headline font-bold">Elena Vance</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-widest font-label">System
+                            Engineer</p>
+                    </div>
+                    <div class="flex items-center gap-1 mb-6">
+                        <span class="material-symbols-outlined text-secondary text-sm"
+                            style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="font-bold text-on-surface">5.0</span>
+                        <span class="text-outline text-sm">(86 Projects)</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-2 mb-8">
+                        <span
+                            class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">Cloud</span>
+                        <span
+                            class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">Security</span>
+                    </div>
+                    <button
+                        class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-on-primary transition-all active:scale-95">Portfolioni
+                        ko‘rish</button>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-8 rounded-xl group hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <div
+                            class="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:blur-2xl transition-all">
+                        </div>
+                        <img alt="Marcus Thorne"
+                            class="w-32 h-32 rounded-full object-cover relative z-10 border-4 border-white shadow-lg"
+                            data-alt="Close up of a professional man in high-end creative agency environment, cinematic lighting"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaYnsidtmygYVxcmUPAU7CxT1HbgwKmvtYLrzOXkfdUNLHAa7wpW6-hcBNRQ8jL_Cq4NLGh4jr0SMcIEpCG4TOFF8YVM_OvqLxAsQoaT5ItLqOhov1CWlZv_6iaeBzR2un9f6k9jnUID1Xnz9fL7_p0CqsIPDTNwEio0gS35gDX_hozYXQsg-jF5fv8cxkcydJPEq1Wfy1y34W1STCCnMEC6QgZa0mqRxEgOrDNjvTbLDgWOMZeVvziJZvpBtGGz0qlC1p4Ql2TCw" />
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-headline font-bold">Marcus Thorne</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-widest font-label">Product
+                            Strategist</p>
+                    </div>
+                    <div class="flex items-center gap-1 mb-6">
+                        <span class="material-symbols-outlined text-secondary text-sm"
+                            style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="font-bold text-on-surface">4.8</span>
+                        <span class="text-outline text-sm">(210 Projects)</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-2 mb-8">
+                        <span
+                            class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">SaaS</span>
+                        <span
+                            class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-xs font-bold rounded-full uppercase tracking-tighter">Growth</span>
+                    </div>
+                    <button
+                        class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-on-primary transition-all active:scale-95">Portfolioni
+                        ko‘rish</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer
+        class="md:hidden fixed bottom-0 w-full rounded-t-2xl z-50 bg-white dark:bg-slate-950 border-t border-blue-100/20 dark:border-slate-800 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center w-full px-4 pb-6 pt-2">
+        <div
+            class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 rounded-xl px-5 py-2 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Bosh sahifa</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">search</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Ishlar</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">chat_bubble</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Xabarlar</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Profil</span>
+        </div>
+    </footer>
+{% endblock %}

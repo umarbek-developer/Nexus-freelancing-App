@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}The Nexus — Freelancer profili{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+{% block body_class %}bg-surface text-on-surface{% endblock %}
+
+{% block main %}
+<header
+        class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm shadow-blue-900/5">
+        <div class="flex justify-between items-center px-6 py-3 w-full">
+            <div class="flex items-center gap-4">
+                <a class="text-blue-700 dark:text-blue-400 p-2 rounded-full hover:bg-blue-50/50 transition-colors active:scale-95 duration-200"
+                    href="{% url 'browse_freelancers' %}" aria-label="Orqaga">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <button type="button" data-sidebar-open
+                    class="material-symbols-outlined text-blue-700 dark:text-blue-400 p-2 hover:bg-blue-50/50 transition-colors rounded-full active:scale-95 duration-200"
+                    data-icon="menu">menu</button>
+                <span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">The Nexus</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <nav class="flex gap-6">
+                    <a class="text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium"
+                        href="{% url 'landing_page' %}">Bosh sahifa</a>
+                    <a class="text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium"
+                        href="{% url 'browse_freelancers' %}">Freelancerlar</a>
+                    <a class="text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium"
+                        href="{% url 'inbox' %}">Xabarlar</a>
+                    <a class="text-blue-700 font-bold text-sm font-medium" href="{% url 'profile_settings' %}">Profil</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="{% url 'profile_settings' %}" class="w-8 h-8 rounded-full border border-blue-100 overflow-hidden"
+                    aria-label="Profil">
+                    {% if request.user.avatar %}
+                    <img class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" alt="Profil rasmi" />
+                    {% else %}
+                    <div class="w-full h-full bg-surface-container-low flex items-center justify-center text-outline">
+                        <span class="material-symbols-outlined text-base">person</span>
+                    </div>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            <div class="lg:col-span-8">
+                <div class="relative group">
+                    <div class="w-full h-64 rounded-3xl overflow-hidden mb-[-4rem]">
+                        <img class="w-full h-full object-cover"
+                            data-alt="Sophisticated modern office interior with large windows, minimalist furniture, and soft morning sunlight filtering through"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGmlFkbTv2bqozvtCdH_Lu9oOpyM2EG8bEC2TPBME4anWDcABxeP-YraWboIVklj_rGPMpnThaZM9-KSebSGxbgAzNJMMTPiF1rSKdgtOS4Npct3Ihw18DF7HG8B0GtjVa5ygzldKHOZ2nSg70i_MVF_FDxKbSq0SlQjnwbMd-edQW3NzsFEVVuoqPWB2ZaL0IHDfsP2jSwkT-9sRPZTLTrA2LoR_vcjjMnGUx990Pot9jKpjI9ZpFMxaMm9MgdIFG5Ygsk1CCRzM" />
+                    </div>
+                    <div class="flex flex-col md:flex-row items-end gap-6 px-8">
+                        <div class="relative">
+                            <img alt="Alex Rivera"
+                                class="w-40 h-40 rounded-3xl border-8 border-surface-bright shadow-xl object-cover relative z-10"
+                                data-alt="Professional headshot of a creative male designer with spectacles, looking confidently at the camera, neutral grey background"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt_4kl_5YbCs_OaifqADOoApTGPFi8JGPvVL55OA_QkDovK_KC1ctZ87jSMW5LT3ULkRYAAzV7fBdMoyb1Pa2w2mnzWVXlrO6s6M21mvt-A62br1Xt0l2qA097EqG6KRDREu3n_jcWwrcQGTEiKvwWEJobj8N9eAS-27QAV3zCLhADK1v83EMi4yGcbVg6vTfePKSfQyLZ5UQqDzp95imppy5EmYMN3uYKOd0PB6XkvRTBYm-W76q3DHprwArwowSzls2bBS-yvyU" />
+                            <div
+                                class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-xl z-20 shadow-lg">
+                                <span class="material-symbols-outlined text-sm" data-icon="verified"
+                                    style="font-variation-settings: 'FILL' 1;">verified</span>
+                            </div>
+                        </div>
+                        <div class="pb-4 flex-1">
+                            <h1 class="text-4xl font-extrabold tracking-tight text-on-surface mb-1">{{ profile.user.username }}</h1>
+                            <div class="flex flex-wrap items-center gap-3 text-sm font-medium text-outline">
+                                <span class="flex items-center gap-1"><span
+                                        class="material-symbols-outlined text-blue-600"
+                                        data-icon="palette">palette</span> {{ profile.title }}</span>
+                                <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                                <span class="flex items-center gap-1"><span
+                                        class="material-symbols-outlined text-blue-600"
+                                        data-icon="location_on">location_on</span> {{ profile.user.location|default:"" }}</span>
+                                <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                                <span class="flex items-center gap-1"><span
+                                        class="material-symbols-outlined text-blue-600" data-icon="star"
+                                        style="font-variation-settings: 'FILL' 1;">star</span> {{ reviews|length }} ta izoh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-4 flex flex-col gap-4">
+                <div class="bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-fit">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-outline">Boshlanish narxi</span>
+                        <span class="text-3xl font-black text-primary">${{ profile.hourly_rate|floatformat:0 }}<span
+                                class="text-sm font-normal text-outline">/soat</span></span>
+                    </div>
+                    <div class="space-y-3">
+                        <button
+                            class="w-full bg-primary text-on-primary py-4 rounded-full font-bold hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2">
+                            Freelancer'ni yollash
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+                        </button>
+                        <button
+                            class="w-full bg-primary-container text-on-primary-container py-4 rounded-full font-bold hover:bg-surface-container-high transition-all active:scale-95">
+                            Loyihaga taklif qilish
+                        </button>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-surface-container-low flex justify-around">
+                        <div class="text-center">
+                            <p class="text-xs text-outline mb-1">Javob vaqti</p>
+                            <p class="font-bold text-on-surface">2 hours</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs text-outline mb-1">Bajarilish</p>
+                            <p class="font-bold text-on-surface">98%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-4 space-y-8">
+                <div class="bg-surface-container-low p-8 rounded-[2rem]">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+                        Biografiya
+                    </h3>
+                    <p class="text-on-surface-variant leading-relaxed mb-6 font-body">
+                        {{ profile.user.bio|default:"Bio yo‘q." }}
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        {% for s in profile.skills.all %}
+                        <span class="px-4 py-1.5 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full text-xs font-bold">{{ s.name }}</span>
+                        {% empty %}
+                        <span class="px-4 py-1.5 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full text-xs font-bold">Ko‘nikma yo‘q</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest p-8 rounded-[2rem] border border-surface-container-low">
+                    <h3 class="text-xl font-bold mb-6">Tajriba</h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div
+                                class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary"
+                                    data-icon="architecture">architecture</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Yetakchi dizayner</h4>
+                                <p class="text-sm text-outline">Skyline Interactive • 2020 — Present</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary" data-icon="draw">draw</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Product dizayner</h4>
+                                <p class="text-sm text-outline">Nova Tech Labs • 2017 — 2020</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 space-y-8">
+                <div>
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-2xl font-bold">Portfolio</h3>
+                        <a class="text-primary font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                            href="{% url 'browse_freelancers' %}">Barcha ishlar <span class="material-symbols-outlined text-sm"
+                                data-icon="open_in_new">open_in_new</span></a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for item in portfolio|slice:":4" %}
+                        <div class="group relative overflow-hidden rounded-[2.5rem] bg-slate-100 aspect-[4/3]">
+                            {% if item.image %}
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ item.image.url }}" alt="{{ item.title }}">
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center text-outline">
+                                <span class="material-symbols-outlined text-4xl">image</span>
+                            </div>
+                            {% endif %}
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8 text-white">
+                                <h4 class="text-xl font-bold">{{ item.title }}</h4>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-span-full bg-surface-container-lowest rounded-2xl p-8 text-on-surface-variant">
+                            Portfolio yo‘q.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest p-8 rounded-[2rem] border border-surface-container-low">
+                    <h3 class="text-2xl font-bold mb-8">Mijozlar fikrlari</h3>
+                    <div class="space-y-10">
+                        {% for r in reviews|slice:":10" %}
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0">
+                                {% if r.reviewer.avatar %}
+                                <img class="w-10 h-10 rounded-full object-cover" src="{{ r.reviewer.avatar.url }}" alt="Profil">
+                                {% else %}
+                                <div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-outline">
+                                    <span class="material-symbols-outlined text-base">person</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center gap-1 mb-2 text-primary">
+                                {% for _ in "12345" %}
+                                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                                {% endfor %}
+                                <span class="text-xs text-outline ml-2">{{ r.rating }}/5</span>
+                            </div>
+                            <p class="text-on-surface font-medium italic mb-3">"{{ r.comment }}"</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-outline uppercase tracking-wider">{{ r.reviewer.username }}</span>
+                                <span class="text-xs text-outline-variant">{{ r.created_at }}</span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="bg-surface-container-lowest rounded-2xl p-6 text-on-surface-variant">
+                            Hozircha izohlar yo‘q.
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'leave_review' 1 %}" class="hidden"></a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav
+        class="md:hidden fixed bottom-0 w-full rounded-t-2xl z-50 bg-white dark:bg-slate-950 border-t border-blue-100/20 dark:border-slate-800 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <div class="flex justify-around items-center w-full px-4 pb-safe pt-2">
+            <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 transition-transform active:scale-90"
+                href="{% url 'landing_page' %}">
+                <span class="material-symbols-outlined" data-icon="home">home</span>
+                <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Bosh sahifa</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 transition-transform active:scale-90"
+                href="{% url 'browse_freelancers' %}">
+                <span class="material-symbols-outlined" data-icon="search">search</span>
+                <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Freelancerlar</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 transition-transform active:scale-90"
+                href="{% url 'inbox' %}">
+                <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+                <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Xabarlar</span>
+            </a>
+            <a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 rounded-xl px-5 py-2 transition-transform active:scale-90"
+                href="{% url 'profile_settings' %}">
+                <span class="material-symbols-outlined" data-icon="person">person</span>
+                <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Profil</span>
+            </a>
+        </div>
+    </nav>
+{% endblock %}

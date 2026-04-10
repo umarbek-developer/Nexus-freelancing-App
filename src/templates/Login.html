@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kirish | The Nexus{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+{% block body_class %}bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed{% endblock %}
+
+{% block extra_head %}
+<style>
+    .bg-login-gradient {
+        background: linear-gradient(135deg, #003d9b 0%, #0052cc 100%);
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<a class="fixed top-6 left-6 z-[55] flex items-center gap-2 bg-white/70 backdrop-blur-xl px-3 py-2 rounded-full shadow-sm shadow-blue-900/5 hover:bg-white transition"
+    href="{% url 'landing_page' %}" aria-label="Orqaga">
+    <span class="material-symbols-outlined text-blue-700">arrow_back</span>
+    <span class="hidden sm:block text-sm font-bold text-blue-800">Orqaga</span>
+</a>
+<button type="button" data-sidebar-open
+    class="fixed top-6 left-[8.25rem] z-[55] bg-white/70 backdrop-blur-xl p-2 rounded-full shadow-sm shadow-blue-900/5 hover:bg-white transition active:scale-95"
+    aria-label="Menyu">
+    <span class="material-symbols-outlined text-blue-700">menu</span>
+</button>
+
+<main class="min-h-screen flex items-center justify-center p-6 md:p-12">
+        <div
+            class="w-full max-w-[1200px] flex flex-col md:flex-row h-full md:h-[800px] bg-surface-container-lowest rounded-[2rem] overflow-hidden shadow-[0_40px_80px_-15px_rgba(9,28,53,0.1)]">
+            <div
+                class="hidden md:flex md:w-1/2 bg-login-gradient p-12 flex-col justify-between relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-container/30 rounded-full blur-[120px] -mr-64 -mt-64">
+                </div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
+                            <img src="{% static 'Nexus Freelancing logo design.png' %}" alt="Nexus logo" class="h-10 w-10 object-contain">
+                        </div>
+                        <span class="font-headline font-extrabold text-white text-2xl tracking-tighter">The Nexus</span>
+                    </div>
+                </div>
+                <div class="relative z-10 max-w-md">
+                    <h1 class="font-headline font-extrabold text-white text-5xl leading-tight tracking-tight mb-6">
+                        Professional <span class="text-tertiary-fixed">salohiyatingizni</span> oshiring.
+                    </h1>
+                    <p class="text-primary-fixed font-body text-lg leading-relaxed opacity-90">
+                        Eng yaxshi freelancerlar va mijozlar bilan bir platformada ishlang.
+                    </p>
+                </div>
+                <div class="relative z-10 flex items-center gap-8">
+                    <div class="flex -space-x-4">
+                        <img class="w-12 h-12 rounded-full border-4 border-primary"
+                            data-alt="professional headshot of a smiling man in a business suit with soft studio lighting"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj9LbuNU23d2PCeVKZbGElVrUmZN1XDNT2kCbuaRZ-I9df2QPnP0WxjF9UBqyJ_MRG8fCw42DOGwYkbCn-Na93jCn_JNwRERy3m07FbOqcx1pyYD0Gj204ii_J_816b9VdyYzpJeSptaVRrvtA2z8qbniF7g2aK76XHxxW-7i1ORRXEccBkmesp1m8f1HXyjT5Uqg4oN62fhdTzzXC5GkCwq3eAGSbm51SAWQMt2MzdFwUJoDzGT9oEps4T0hvTVpRBQAgkhnsZpw" />
+                        <img class="w-12 h-12 rounded-full border-4 border-primary"
+                            data-alt="close up portrait of a professional woman wearing glasses in a brightly lit office environment"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBklG6pTImN5R4iP1oxfuloedhcmUt1jmriid2SQw2dJ0H-hbqwtkot_k9zwtNN5S95-DsDA7lMI9vw8YEIz0gRSGHBdr9ORLoE_hu5DpuL4D-NnVm4EE3NESA_NKLmAm6A_dBNtdfMJq1dtBX5qwXDVEwOsGYx4tBsFP45BN0InLRTFyyWFar_2OLdRhg9kdXQ7yKyN9a48w6RbIv7nphH-vyat62NibL5rkdcXhOMow1RBo4zBIbh9AOPSLcnw3xDiJhkgpxbM4" />
+                        <img class="w-12 h-12 rounded-full border-4 border-primary"
+                            data-alt="headshot of a creative professional with a warm expression and natural daylight"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWWoq7-LGMuk9wkCTAjfZqdjtSzEQqcMGwL6U62XRLWlxrVCu-dnqVI9_rWollAsIae8jsfk33NBj53OLJIDScbXi2lVXY8joeEootGP6LTe_AjcySmb2tmiRHCRu0r4TdReO5D8H34HCTwW470lxkftKGJKdWjIAuWyhlBKc0toUdsyhrwszyw9_S2ZP8RDKSSTUhA5OS784b2sVqSqMIqrx0MRjkz56q5zYWHBetxLN17AQxJ3pQmw2p_JFTe2ln-JSyt9txs2o" />
+                    </div>
+                    <div class="text-white/80 text-sm font-medium">
+                        <span class="block text-white font-bold text-base">2k+ professional</span>
+                        Bugun qo‘shilganlar
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-surface-container-lowest">
+                <div class="max-w-md mx-auto w-full">
+                    <div class="md:hidden flex items-center gap-2 mb-12">
+                        <div class="w-9 h-9 rounded-xl bg-white overflow-hidden shadow">
+                            <img src="{% static 'Nexus Freelancing logo design.png' %}" alt="Nexus logo" class="h-9 w-9 object-contain">
+                        </div>
+                        <span class="font-headline font-extrabold text-on-surface text-xl tracking-tighter">The
+                            Nexus</span>
+                    </div>
+                    <header class="mb-10">
+                        <h2 class="font-headline font-extrabold text-on-surface text-3xl mb-2">Xush kelibsiz</h2>
+                        <p class="text-on-surface-variant font-body">Kabinetga kirish uchun maʼlumotlarni kiriting.</p>
+                    </header>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <button type="button"
+                            class="flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container transition-colors duration-200 group">
+                            <img class="w-5 h-5" data-alt="Google logo icon on a transparent background"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn5ReGQWRQQ_euU23lHI8LtZebsKjdABvoq2GaE6arV_ElG8BDUNXCs6umeVbkTq-uhGSOQ25fDNczCjCRXKEWmObiEqbQPBuEHzn9U1K15aGpnEj9r_ysZTGfY2nCQLO_Qsabtz8A9xHcsV-4v7-dPwN2_QjZG9YxDrEK3J-i5HgWF3nrRnvyxSSKGHwYoBv3lpnDRHVakNsJ2LpAdVWORpba2VrUGZDWz2DTPcaEhII6m6z82e0NBor3MWTGR5nke0_TrdoDVZQ" />
+                            <span class="text-on-surface font-semibold text-sm">Google</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container transition-colors duration-200 group">
+                            <span class="material-symbols-outlined text-[#1877F2] text-xl" data-icon="facebook"
+                                style="font-variation-settings: 'FILL' 1;">social_leaderboard</span>
+                            <span class="text-on-surface font-semibold text-sm">Facebook</span>
+                        </button>
+                    </div>
+                    <div class="relative flex items-center justify-center mb-8">
+                        <div class="w-full h-px bg-outline-variant/20"></div>
+                        <span
+                            class="absolute bg-surface-container-lowest px-4 text-xs font-bold text-outline uppercase tracking-widest">Yoki</span>
+                    </div>
+                    <form action="{% url 'login' %}" method="post" class="space-y-6">
+                        {% csrf_token %}
+                        
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-on-surface ml-1" for="username">Foydalanuvchi nomi</label>
+                            <div class="relative group">
+                                <span
+                                    class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+                                    data-icon="mail">mail</span>
+                                <input
+                                    class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest text-on-surface transition-all"
+                                    id="username" name="username" placeholder="foydalanuvchi nomi" type="text" />
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center px-1">
+                                <label class="block text-sm font-bold text-on-surface" for="password">Parol</label>
+                                <a class="text-xs font-bold text-primary hover:text-primary-container transition-colors"
+                                    href="{% url 'profile_settings' %}">Parol esdan chiqdimi?</a>
+                            </div>
+                            <div class="relative group">
+                                <span
+                                    class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+                                    data-icon="lock">lock</span>
+                                <input
+                                    class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest text-on-surface transition-all"
+                                    id="password" name="password" placeholder="••••••••" type="password" />
+                                <button
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant transition-colors"
+                                    type="button">
+                                    <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 px-1">
+                            <input class="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary/20"
+                                id="remember" type="checkbox" />
+                            <label class="text-sm font-medium text-on-surface-variant cursor-pointer select-none"
+                                for="remember">Eslab qolish</label>
+                        </div>
+                        <button
+                            class="w-full py-4 bg-primary text-on-primary font-bold rounded-full shadow-lg shadow-primary/20 hover:bg-primary-container hover:scale-[1.01] active:scale-[0.98] transition-all duration-200"
+                            type="submit">
+                            Kirish
+                        </button>
+                    </form>
+                    <footer class="mt-12 text-center">
+                        <p class="text-on-surface-variant font-body">
+                            Akkount yo‘qmi?
+                            <a class="text-primary font-bold hover:underline underline-offset-4 decoration-2 transition-all"
+                                href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+                        </p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="fixed bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-12 text-outline/60">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xl" data-icon="verified_user">verified_user</span>
+                <span class="text-xs font-bold tracking-widest uppercase">SSL himoyalangan</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xl" data-icon="gpp_good">gpp_good</span>
+                <span class="text-xs font-bold tracking-widest uppercase">Maxfiylik</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xl" data-icon="account_balance">account_balance</span>
+                <span class="text-xs font-bold tracking-widest uppercase">Xavfsiz to‘lovlar</span>
+            </div>
+        </div>
+</main>
+{% endblock %}

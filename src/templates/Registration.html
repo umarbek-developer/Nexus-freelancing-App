@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Roʻyxatdan oʻtish | The Nexus{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<a class="fixed top-6 left-6 z-[55] flex items-center gap-2 bg-white/70 backdrop-blur-xl px-3 py-2 rounded-full shadow-sm shadow-blue-900/5 hover:bg-white transition"
+    href="{% url 'landing_page' %}" aria-label="Orqaga">
+    <span class="material-symbols-outlined text-blue-700">arrow_back</span>
+    <span class="hidden sm:block text-sm font-bold text-blue-800">Orqaga</span>
+</a>
+<button type="button" data-sidebar-open
+    class="fixed top-6 left-[8.25rem] z-[55] bg-white/70 backdrop-blur-xl p-2 rounded-full shadow-sm shadow-blue-900/5 hover:bg-white transition active:scale-95"
+    aria-label="Menyu">
+    <span class="material-symbols-outlined text-blue-700">menu</span>
+</button>
+
+<header
+    class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl flex justify-between items-center px-6 py-4 shadow-sm shadow-blue-900/5">
+    <div class="text-xl font-extrabold tracking-tighter text-blue-800">The Nexus</div>
+    <div class="flex items-center gap-4">
+        <span class="text-on-surface-variant text-sm font-medium">Akkount bormi?</span>
+        <a class="text-primary font-bold hover:bg-blue-50/50 px-4 py-2 rounded-full transition-colors active:scale-95 duration-200"
+            href="{% url 'login' %}">Kirish</a>
+    </div>
+</header>
+
+<main class="min-h-screen pt-24 pb-12 px-6 flex flex-col items-center justify-center bg-surface">
+        <div class="w-full max-w-4xl space-y-12">
+            <div class="text-center space-y-3">
+                <h1 class="font-headline text-4xl md:text-5xl font-extrabold tracking-tight text-on-surface">Roʻyxatdan
+                    oʻting</h1>
+                <p class="text-on-surface-variant text-lg max-w-xl mx-auto">Rolni tanlang va davom eting.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <label class="group relative cursor-pointer">
+                    <input checked="" class="peer sr-only" name="role" type="radio" />
+                    <div
+                        class="h-full bg-surface-container-lowest p-8 rounded-xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary-fixed transition-all duration-300 shadow-sm hover:shadow-md flex flex-col items-start gap-6">
+                        <div
+                            class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+                            <span class="material-symbols-outlined text-3xl">work</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-headline text-2xl font-bold">Men freelancer</h3>
+                            <p class="text-on-surface-variant group-hover:text-on-surface transition-colors">O‘z ko‘nikmalarimni
+                                ko‘rsatib, yaxshi loyihalarda ishlamoqchiman.</p>
+                        </div>
+                        <div class="mt-auto pt-4 flex items-center gap-2 text-primary font-bold">
+                            <span>Boshlash</span>
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </div>
+                    </div>
+                </label>
+                <label class="group relative cursor-pointer">
+                    <input class="peer sr-only" name="role" type="radio" />
+                    <div
+                        class="h-full bg-surface-container-lowest p-8 rounded-xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary-fixed transition-all duration-300 shadow-sm hover:shadow-md flex flex-col items-start gap-6">
+                        <div
+                            class="w-14 h-14 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary">
+                            <span class="material-symbols-outlined text-3xl">person_search</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-headline text-2xl font-bold">Men mijoz</h3>
+                            <p class="text-on-surface-variant group-hover:text-on-surface transition-colors">Loyihalarim uchun
+                                kuchli freelancer yollamoqchiman.</p>
+                        </div>
+                        <div class="mt-auto pt-4 flex items-center gap-2 text-tertiary font-bold">
+                            <span>Freelancer topish</span>
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-sm max-w-2xl mx-auto w-full">
+                <form class="space-y-6" action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    {% if messages %}
+                    <div class="space-y-2">
+                        {% for message in messages %}
+                        <div class="rounded-xl bg-red-50 text-red-700 px-4 py-3 text-sm font-semibold">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="first_name">Ism</label>
+                            <input
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="first_name" placeholder="Alex" type="text" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="last_name">Familiya</label>
+                            <input
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="last_name" placeholder="Rivera" type="text" />
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="username">Foydalanuvchi nomi</label>
+                            <input
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="username" name="username" placeholder="username" type="text" required />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="role">Rol</label>
+                            <select
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="role" name="role">
+                                <option value="client">Mijoz</option>
+                                <option value="freelancer">Freelancer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                            for="email">Email</label>
+                        <input
+                            class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                            id="email" name="email" placeholder="alex.rivera@nexus.com" type="email" />
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="password1">Parol</label>
+                            <input
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="password1" name="password1" placeholder="••••••••" type="password" required />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold tracking-wide text-on-surface-variant uppercase"
+                                for="password2">Parolni tasdiqlang</label>
+                            <input
+                                class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                                id="password2" name="password2" placeholder="••••••••" type="password" required />
+                        </div>
+                    </div>
+                    <button
+                        class="w-full bg-primary text-on-primary font-bold py-4 rounded-full shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all duration-300"
+                        type="submit">Roʻyxatdan oʻtish</button>
+                    <div class="relative py-4">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-outline-variant/30"></div>
+                        </div>
+                        <div class="relative flex justify-center text-xs uppercase"><span
+                                class="bg-surface-container-lowest px-4 text-on-surface-variant font-semibold tracking-widest">Yoki
+                                quyidagilar bilan</span></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button
+                            class="flex items-center justify-center gap-3 bg-surface-container-low hover:bg-surface-container-high transition-colors py-3 px-4 rounded-full font-semibold text-on-surface text-sm"
+                            type="button">
+                            <img alt="Google Logo" class="w-5 h-5"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwYMSSpMazHrfenFwSOLCkomQGFfhHmGWppRm4DPpTuUvAGGohYsdqks7rhYrLWqkwrc51oQeuW2CPVRlJutI-LoTdbzaQ4LDizj7ZXZq543NIQDaiwertkBrMzGssK-z25mtcK02dhfKZFnAOayZEJHdqjYHPHxN6grPgSqD2MCwrwyazR-xeSYqtWN3E36Y3lMssp-b-sxHYHKw7K_4YUpZs2_1JE_YDLeDw6NlWYs0loV5B1bl3ubNfDry-NXhxzpcNKRwcXu0" />
+                            <span>Google</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-3 bg-surface-container-low hover:bg-surface-container-high transition-colors py-3 px-4 rounded-full font-semibold text-on-surface text-sm"
+                            type="button">
+                            <span class="material-symbols-outlined text-lg"
+                                style="font-variation-settings: 'FILL' 1;">account_circle</span>
+                            <span>LinkedIn</span>
+                        </button>
+                    </div>
+                    <p class="text-center text-xs text-on-surface-variant leading-relaxed px-4">Akkount yaratish orqali,
+                        siz <a class="underline font-medium text-primary"
+                            href="{% url 'landing_page' %}">Xizmat ko‘rsatish shartlari</a> va
+                        <a class="underline font-medium text-primary" href="{% url 'landing_page' %}">Maxfiylik siyosati</a>ga rozilik bildirasiz.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div
+        class="fixed bottom-12 right-12 hidden lg:block max-w-xs p-6 bg-white shadow-2xl rounded-2xl border border-blue-50">
+        <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden">
+                <img class="w-full h-full object-cover"
+                    data-alt="Portrait of a sophisticated professional woman in a bright modern office setting, smiling warmly"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-dpKt-FfewgVFOcbJAi67909FkVYT_LpHxyOsi_sGqJrVPlgXNR4hgDFLTors-wmnTttvY3C6jMXZHKvU6DmkPqkpY8InfS1xG0hqKG9rIY9bQ1LWJkbw0NXXD0LqptJIgSCFAV5xXdVHw6b5f6i6-wFaELknhwky-R_t9Mh17MJrWkiE_SUIZPlCcfkyW9rKtvPECUY_ZwhPepu0sPHA1lNMnKx-nZgWm_-zpB05mmjNn4wfpeOqkNWqqlAyJAcQ8M99gGGcpsQ" />
+            </div>
+            <div>
+                <p class="font-headline font-bold text-on-surface">Alex Rivera</p>
+                <p class="text-xs text-on-surface-variant">Yuqori baholangan mutaxassis</p>
+            </div>
+        </div>
+        <p class="text-sm italic text-on-surface-variant">"The Nexus faoliyatimni o‘zgartirdi. Endi men sifatni qadrlaydigan
+            mijozlar bilan ishlayman."</p>
+    </div>
+{% endblock %}

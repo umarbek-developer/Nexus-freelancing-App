@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Xabarlar | The Nexus{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between gap-4 mb-8">
+        <h1 class="text-3xl font-headline font-extrabold">Xabarlar</h1>
+        <a class="text-primary font-bold" href="{% url 'dashboard' %}">Panel</a>
+    </div>
+
+    {% if conversations %}
+    <div class="space-y-3">
+        {% for c in conversations %}
+        <a href="{% url 'conversation_detail' c.id %}"
+            class="block bg-surface-container-lowest rounded-2xl p-5 hover:bg-surface-container-low transition">
+            <div class="flex items-center justify-between gap-4">
+                <div class="font-bold text-on-surface">Suhbat #{{ c.id }}</div>
+                <div class="text-xs text-outline">{{ c.updated_at }}</div>
+            </div>
+            <div class="text-sm text-on-surface-variant mt-2">
+                Ishtirokchilar:
+                {% for u in c.participants.all %}
+                <span class="font-semibold">{% if u == request.user %}Siz{% else %}{{ u.username }}{% endif %}</span>{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest rounded-2xl p-8 text-on-surface-variant">
+        Hozircha suhbatlar yo‘q.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

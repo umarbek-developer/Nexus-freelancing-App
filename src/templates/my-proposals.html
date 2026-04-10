@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Mening takliflarim{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-headline font-extrabold mb-6">Mening takliflarim</h1>
+
+    {% if proposals %}
+    <div class="space-y-4">
+        {% for p in proposals %}
+        <div class="bg-surface-container-lowest rounded-2xl p-6 flex items-start justify-between gap-6">
+            <div>
+                <a class="font-bold text-lg text-primary hover:underline"
+                    href="{% url 'job_detail' p.job.id %}">{{ p.job.title }}</a>
+                <div class="text-sm text-on-surface-variant mt-1">Holat: <span class="font-semibold">{{ p.status }}</span></div>
+                <div class="text-sm text-on-surface-variant mt-1">Narx: <span class="font-semibold">${{ p.proposed_rate }}</span></div>
+                <p class="text-sm text-on-surface-variant mt-3">{{ p.cover_letter }}</p>
+            </div>
+            <div class="text-xs text-outline whitespace-nowrap">
+                {{ p.created_at }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest rounded-2xl p-8 text-on-surface-variant">
+        Hozircha takliflaringiz yo‘q.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

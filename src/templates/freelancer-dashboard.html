@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}The Nexus | Freelancer paneli{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+{% block body_class %}bg-surface text-on-surface{% endblock %}
+
+{% block main %}
+<header
+        class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-blue-900/5 flex justify-between items-center px-6 py-3 w-full">
+        <div class="flex items-center gap-4">
+            <a class="text-blue-700 p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200" href="{% url 'landing_page' %}"
+                aria-label="Orqaga">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <button type="button" data-sidebar-open
+                class="material-symbols-outlined text-blue-700 hover:bg-blue-50/50 transition-colors p-2 rounded-full active:scale-95 duration-200"
+                data-icon="menu">menu</button>
+            <span class="text-xl font-extrabold tracking-tighter text-blue-800">The Nexus</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-8 mr-6">
+                <a class="text-blue-700 font-bold font-manrope tracking-tight" href="{% url 'freelancer_dashboard' %}">Panel</a>
+                <a class="text-slate-500 hover:text-blue-600 transition-colors font-manrope tracking-tight"
+                    href="{% url 'job_list' %}">Ishlar</a>
+                <a class="text-slate-500 hover:text-blue-600 transition-colors font-manrope tracking-tight"
+                    href="{% url 'inbox' %}">Xabarlar</a>
+            </div>
+            <a href="{% url 'profile_settings' %}" class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed"
+                aria-label="Profil">
+                {% if request.user.avatar %}
+                <img class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" alt="Profil rasmi" />
+                {% else %}
+                <div class="w-full h-full bg-surface-container-low flex items-center justify-center text-outline">
+                    <span class="material-symbols-outlined">person</span>
+                </div>
+                {% endif %}
+            </a>
+        </div>
+    </header>
+    <div class="flex min-h-screen pt-16">
+        <aside
+            class="hidden lg:flex flex-col h-full py-6 w-72 fixed left-0 bg-slate-50 shadow-2xl z-40 transition-all duration-300">
+            <div class="px-6 mb-8 flex flex-col items-start">
+                <div class="flex items-center gap-3 mb-2">
+                    <img class="w-12 h-12 rounded-full object-cover" data-alt="professional male profile avatar"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Rhvz7nlim7U5jyHaCm85bnFkF30M55D9meytgvhhK2o2WlwUZ21Wcccm0xld5QGrxntUlXVaRWt4ppW9RCQHtpgMX9xAt4uQJ_jE8--zgUel9F_TAPFF4kZ9aDQxGOEaDJ4VOhPUp1RAZjTyJW6QQ6QknPQnHU3Rwv2113ysuHocGE5My07QKk7omxv-penTArxMn39gY5CM1kyQZ4Ou0l6oLGp-xDyktnUi4dpS_vqvlExm2S8J5RenxuKGoYi-RWAVSjFJvO8" />
+                    <div>
+                        <p class="font-manrope font-black text-blue-800 text-base">Alex Rivera</p>
+                        <p class="text-xs text-slate-500">Tajribali dizayner</p>
+                    </div>
+                </div>
+                <span
+                    class="text-[10px] uppercase tracking-widest bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full font-bold">Top
+                    reyting</span>
+            </div>
+            <nav class="flex-1 space-y-1">
+                <a class="flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-lg mx-2 transition-all duration-300"
+                    href="{% url 'freelancer_dashboard' %}">
+                    <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    <span class="font-inter text-sm font-medium">Panel</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-blue-50 mx-2 transition-all duration-300 rounded-lg"
+                    href="{% url 'job_list' %}">
+                    <span class="material-symbols-outlined" data-icon="work">work</span>
+                    <span class="font-inter text-sm">Mening loyihalarim</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-blue-50 mx-2 transition-all duration-300 rounded-lg"
+                    href="{% url 'dashboard' %}">
+                    <span class="material-symbols-outlined" data-icon="payments">payments</span>
+                    <span class="font-inter text-sm">To‘lovlar</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-blue-50 mx-2 transition-all duration-300 rounded-lg"
+                    href="{% url 'profile_settings' %}">
+                    <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    <span class="font-inter text-sm">Sozlamalar</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-blue-50 mx-2 transition-all duration-300 rounded-lg"
+                    href="{% url 'landing_page' %}">
+                    <span class="material-symbols-outlined" data-icon="help">help</span>
+                    <span class="font-inter text-sm">Yordam</span>
+                </a>
+            </nav>
+        </aside>
+        <main class="flex-1 lg:ml-72 px-4 md:px-8 py-8 mb-20 md:mb-0">
+            <div class="mb-10 max-w-6xl mx-auto">
+                <h1 class="text-4xl font-extrabold text-on-surface tracking-tight mb-2">Ish maydoni</h1>
+                <p class="text-on-surface-variant text-lg">Bu oy natijalar yaxshi ko‘rinmoqda, Alex.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8">
+                <div
+                    class="md:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl" data-icon="trending_up">trending_up</span>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-sm font-semibold uppercase tracking-widest text-slate-500 mb-2">Jami daromad</p>
+                        <h2 class="text-5xl font-extrabold text-primary mb-6">${{ earned_total|floatformat:0 }}</h2>
+                        <div class="text-xs text-on-surface-variant mb-4">
+                            Shartnoma: <span class="font-bold">${{ contract_total|floatformat:0 }}</span>
+                            · Takliflar: <span class="font-bold">${{ proposal_total|floatformat:0 }}</span>
+                        </div>
+                        <div class="flex items-end gap-1 h-32 w-full">
+                            <div class="bg-primary/20 w-full h-[40%] rounded-t-sm"></div>
+                            <div class="bg-primary/20 w-full h-[55%] rounded-t-sm"></div>
+                            <div class="bg-primary/20 w-full h-[45%] rounded-t-sm"></div>
+                            <div class="bg-primary/40 w-full h-[70%] rounded-t-sm"></div>
+                            <div class="bg-primary/40 w-full h-[60%] rounded-t-sm"></div>
+                            <div class="bg-primary/60 w-full h-[85%] rounded-t-sm"></div>
+                            <div class="bg-primary w-full h-[100%] rounded-t-sm"></div>
+                        </div>
+                        <div class="flex justify-between mt-2 text-[10px] font-bold text-slate-400">
+                            <span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-primary-container text-on-primary-container p-6 rounded-xl shadow-sm">
+                        <span class="material-symbols-outlined mb-2" data-icon="pending_actions">pending_actions</span>
+                        <p class="text-sm font-medium opacity-80">Faol takliflar</p>
+                        <p class="text-3xl font-bold">{{ active_proposals_count }}</p>
+                    </div>
+                    <div class="bg-surface-container-low p-6 rounded-xl shadow-sm">
+                        <span class="material-symbols-outlined text-tertiary mb-2" data-icon="task_alt">task_alt</span>
+                        <p class="text-sm font-medium text-slate-600">Faol shartnomalar</p>
+                        <p class="text-3xl font-bold text-on-surface">{{ active_contracts_count }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div>
+                    <div class="flex justify-between items-end mb-6">
+                        <h3 class="text-2xl font-bold text-on-surface">Faol shartnomalar</h3>
+                        <a class="text-primary text-sm font-bold hover:underline" href="{% url 'job_list' %}">Hammasi</a>
+                    </div>
+                    <div class="space-y-4">
+                        <div
+                            class="bg-surface-container-lowest p-5 rounded-xl flex items-center gap-4 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-700">
+                                <span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-on-surface">Edge UI Redesign</h4>
+                                <p class="text-xs text-slate-500">TechNova Solutions • 4 kun qoldi</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-on-surface">$4,500</p>
+                                <span class="text-[10px] font-bold text-tertiary uppercase">Jarayonda</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest p-5 rounded-xl flex items-center gap-4 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-700">
+                                <span class="material-symbols-outlined"
+                                    data-icon="brand_awareness">brand_awareness</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-on-surface">Identity Branding</h4>
+                                <p class="text-xs text-slate-500">Solaris Corp • Bosqich 2/3</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-on-surface">$2,200</p>
+                                <span class="text-[10px] font-bold text-tertiary uppercase">Tekshiruv kutilmoqda</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-end mb-6">
+                        <h3 class="text-2xl font-bold text-on-surface">So‘nggi takliflar</h3>
+                        <a class="text-primary text-sm font-bold hover:underline" href="{% url 'freelancer_dashboard' %}">Boshqarish</a>
+                    </div>
+                    <div class="bg-surface-container-low rounded-xl overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead
+                                class="bg-surface-container-high/50 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-4">Project</th>
+                                    <th class="px-6 py-4">Taklif</th>
+                                    <th class="px-6 py-4">Holat</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="bg-surface-container-lowest">
+                                    <td class="px-6 py-4">
+                                        <p class="font-bold text-sm">SaaS Dashboard Kit</p>
+                                        <p class="text-[10px] text-slate-400">2 soat oldin joylangan</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-semibold">$3,200</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                                        <span class="text-xs font-medium">Yuborildi</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg-surface-container-lowest">
+                                    <td class="px-6 py-4">
+                                        <p class="font-bold text-sm">E-commerce App</p>
+                                        <p class="text-[10px] text-slate-400">5 soat oldin joylangan</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-semibold">$8,500</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                        <span class="text-xs font-medium">Suhbat</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg-surface-container-lowest">
+                                    <td class="px-6 py-4">
+                                        <p class="font-bold text-sm">Portfolio Website</p>
+                                        <p class="text-[10px] text-slate-400">1 kun oldin joylangan</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-semibold">$1,200</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-block w-2 h-2 rounded-full bg-slate-300 mr-2"></span>
+                                        <span class="text-xs font-medium">Yopilgan</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <nav
+        class="md:hidden fixed bottom-0 w-full rounded-t-2xl z-50 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] border-t border-blue-100/20 flex justify-around items-center px-4 pb-safe pt-2 h-20">
+        <a class="flex flex-col items-center justify-center bg-blue-100 text-blue-900 rounded-xl px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'freelancer_dashboard' %}">
+            <span class="material-symbols-outlined" data-icon="home">home</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Bosh sahifa</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+            href="{% url 'job_list' %}">
+            <span class="material-symbols-outlined" data-icon="search">search</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Ishlar</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+            href="{% url 'inbox' %}">
+            <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Xabarlar</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+            href="{% url 'profile_settings' %}">
+            <span class="material-symbols-outlined" data-icon="person">person</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Profil</span>
+        </a>
+    </nav>
+{% endblock %}

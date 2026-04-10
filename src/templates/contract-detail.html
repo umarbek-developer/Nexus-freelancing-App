@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Shartnoma | The Nexus{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-3">
+            <a class="text-primary font-bold" href="{% url 'my_contracts' %}">Orqaga</a>
+            <h1 class="text-3xl font-headline font-extrabold">Shartnoma #{{ contract.id }}</h1>
+        </div>
+        <a class="text-primary font-bold" href="{% url 'job_detail' contract.job.id %}">Ish</a>
+    </div>
+
+    <div class="bg-surface-container-lowest rounded-3xl p-8 space-y-4">
+        <div class="text-lg font-bold">{{ contract.job.title }}</div>
+        <div class="text-sm text-on-surface-variant">
+            Mijoz: <span class="font-semibold">{{ contract.client.username }}</span>
+            · Freelancer: <span class="font-semibold">{{ contract.freelancer.username }}</span>
+        </div>
+        <div class="text-sm text-on-surface-variant">
+            Holat: <span class="font-semibold">{{ contract.status }}</span>
+        </div>
+        <div class="text-sm text-on-surface-variant">
+            Summa: <span class="font-semibold text-primary">${{ contract.amount|floatformat:0 }}</span>
+        </div>
+
+        {% if request.user == contract.client and contract.status != 'completed' %}
+        <form method="post" action="{% url 'complete_contract' contract.id %}" class="pt-4">
+            {% csrf_token %}
+            <button type="submit"
+                class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full active:scale-95 transition-transform">
+                Yakunlash
+            </button>
+        </form>
+        {% endif %}
+
+        {% if contract.status == 'completed' %}
+        <div class="pt-4">
+            <a class="text-primary font-bold" href="{% url 'leave_review' contract.id %}">Izoh qoldirish</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

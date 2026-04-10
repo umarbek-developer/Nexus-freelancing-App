@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Izoh qoldirish | The Nexus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-3">
+            <a class="text-primary font-bold" href="{% url 'contract_detail' contract.id %}">Orqaga</a>
+            <h1 class="text-3xl font-headline font-extrabold">Izoh qoldirish</h1>
+        </div>
+    </div>
+
+    <div class="bg-surface-container-lowest rounded-3xl p-8">
+        <div class="font-bold text-on-surface mb-1">{{ contract.job.title }}</div>
+        <div class="text-sm text-on-surface-variant mb-6">Shartnoma #{{ contract.id }}</div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-on-surface" for="rating">Baholash (1-5)</label>
+                <input id="rating" name="rating" type="number" min="1" max="5" value="5"
+                    class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20">
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-on-surface" for="comment">Izoh</label>
+                <textarea id="comment" name="comment" rows="5"
+                    class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20"
+                    placeholder="Fikr yozing..."></textarea>
+            </div>
+            <button type="submit"
+                class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full active:scale-95 transition-transform">
+                Saqlash
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

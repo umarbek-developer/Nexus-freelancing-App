@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Takliflar{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-headline font-extrabold mb-2">Takliflar</h1>
+    <p class="text-on-surface-variant mb-8">Ish: <span class="font-semibold">{{ job.title }}</span></p>
+
+    {% if messages %}
+    <div class="space-y-2 mb-6">
+        {% for message in messages %}
+        <div class="rounded-xl px-4 py-3 text-sm font-semibold {% if message.tags == 'error' %}bg-red-50 text-red-700{% else %}bg-green-50 text-green-700{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if proposals %}
+    <div class="space-y-4">
+        {% for p in proposals %}
+        <div class="bg-surface-container-lowest rounded-2xl p-6">
+            <div class="flex items-center justify-between gap-6">
+                <div class="font-bold">{{ p.freelancer.username }}</div>
+                <div class="text-sm text-on-surface-variant">Narx: <span class="font-semibold">${{ p.proposed_rate }}</span></div>
+                <div class="text-sm text-on-surface-variant">Holat: <span class="font-semibold">{{ p.status }}</span></div>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-3">{{ p.cover_letter }}</p>
+
+            {% if request.user == job.client %}
+            <div class="flex flex-wrap gap-3 mt-5">
+                <form method="post" action="{% url 'accept_proposal' p.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="px-5 py-2 rounded-full bg-primary text-on-primary font-bold active:scale-95 transition-transform">
+                        Qabul qilish
+                    </button>
+                </form>
+                <form method="post" action="{% url 'reject_proposal' p.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="px-5 py-2 rounded-full bg-surface-container-low text-on-surface font-bold active:scale-95 transition-transform">
+                        Rad etish
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest rounded-2xl p-8 text-on-surface-variant">
+        Hozircha takliflar yo‘q.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

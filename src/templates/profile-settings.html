@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Profil sozlamalari | The Nexus{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between gap-4 mb-8">
+        <h1 class="text-3xl font-headline font-extrabold">Profil sozlamalari</h1>
+        <a class="text-primary font-bold" href="{% url 'dashboard' %}">Panel</a>
+    </div>
+
+    {% if messages %}
+    <div class="space-y-2 mb-6">
+        {% for message in messages %}
+        <div class="rounded-xl px-4 py-3 text-sm font-semibold {% if message.tags == 'error' %}bg-red-50 text-red-700{% else %}bg-green-50 text-green-700{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="bg-surface-container-lowest rounded-3xl p-8">
+        <div class="flex items-center gap-5 mb-8">
+            <div class="w-16 h-16 rounded-2xl overflow-hidden bg-surface-container-low ring-2 ring-primary/10">
+                {% if request.user.avatar %}
+                <img class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" alt="Profil rasmi">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-outline">
+                    <span class="material-symbols-outlined">person</span>
+                </div>
+                {% endif %}
+            </div>
+            <div>
+                <div class="font-bold text-on-surface">{{ request.user.username }}</div>
+                <div class="text-sm text-on-surface-variant">Profil rasmni yangilash</div>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-on-surface" for="id_first_name">Ism</label>
+                    <input type="text" name="first_name" id="id_first_name"
+                        value="{{ form.first_name.value|default:'' }}"
+                        placeholder="Ismingiz"
+                        class="w-full rounded-xl border border-outline/30 bg-surface-container-low px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-on-surface" for="id_last_name">Familiya</label>
+                    <input type="text" name="last_name" id="id_last_name"
+                        value="{{ form.last_name.value|default:'' }}"
+                        placeholder="Familiyangiz"
+                        class="w-full rounded-xl border border-outline/30 bg-surface-container-low px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-sm font-bold text-on-surface" for="id_bio">Bio</label>
+                <textarea name="bio" id="id_bio" rows="3"
+                    placeholder="O'zingiz haqida qisqacha..."
+                    class="w-full rounded-xl border border-outline/30 bg-surface-container-low px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40">{{ form.bio.value|default:'' }}</textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-on-surface" for="id_phone">Telefon</label>
+                    <input type="text" name="phone" id="id_phone"
+                        value="{{ form.phone.value|default:'' }}"
+                        placeholder="+998 90 000 00 00"
+                        class="w-full rounded-xl border border-outline/30 bg-surface-container-low px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-on-surface" for="id_location">Joylashuv</label>
+                    <input type="text" name="location" id="id_location"
+                        value="{{ form.location.value|default:'' }}"
+                        placeholder="Shahar, Mamlakat"
+                        class="w-full rounded-xl border border-outline/30 bg-surface-container-low px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-sm font-bold text-on-surface" for="id_avatar">Profil rasmi</label>
+                {{ form.avatar }}
+                <p class="text-xs text-on-surface-variant">PNG/JPG tavsiya qilinadi.</p>
+            </div>
+
+            <button type="submit"
+                class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full active:scale-95 transition-transform">
+                Saqlash
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

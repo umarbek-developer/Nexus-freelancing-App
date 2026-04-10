@@ -1,0 +1,378 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>{% block title %}The Nexus{% endblock %}</title>
+    <link rel="icon" href="{% static 'Nexus Freelancing logo design.png' %}">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f9f9ff",
+                        "secondary-fixed": "#d7e2ff",
+                        "secondary": "#0059b8",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "on-tertiary-container": "#76e2ff",
+                        "on-secondary-fixed-variant": "#004590",
+                        "surface-container": "#e7eeff",
+                        "primary": "#003d9b",
+                        "on-primary": "#ffffff",
+                        "outline": "#737685",
+                        "surface-dim": "#cadbfc",
+                        "background": "#f9f9ff",
+                        "surface-variant": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#434654",
+                        "outline-variant": "#c3c6d6",
+                        "on-secondary-container": "#fefcff",
+                        "primary-fixed": "#dae2ff",
+                        "inverse-surface": "#20314b",
+                        "surface": "#f9f9ff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#006477",
+                        "on-tertiary-fixed": "#001f27",
+                        "secondary-container": "#0071e6",
+                        "secondary-fixed-dim": "#abc7ff",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "surface-container-high": "#dfe8ff",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container-highest": "#d6e3ff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#afecff",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#48d7f9",
+                        "inverse-primary": "#b2c5ff",
+                        "inverse-on-surface": "#ecf0ff",
+                        "primary-container": "#0052cc",
+                        "surface-tint": "#0c56d0",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001b3f",
+                        "on-surface": "#091c35",
+                        "tertiary": "#004b59",
+                        "on-primary-fixed": "#001848",
+                        "on-background": "#091c35"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .no-scrollbar::-webkit-scrollbar,
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar,
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}bg-surface font-body text-on-surface selection:bg-primary-fixed{% endblock %}">
+    <div id="sidebar-overlay" class="fixed inset-0 z-[60] hidden bg-black/30 backdrop-blur-[2px]"></div>
+    <aside id="sidebar"
+        class="fixed left-0 top-0 z-[70] h-dvh w-80 max-w-[85vw] -translate-x-full bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl shadow-2xl transition-transform duration-200">
+        <div class="h-16 px-6 flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/60">
+            <a class="flex items-center gap-3 text-lg font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 font-headline"
+                href="{% url 'landing_page' %}">
+                <img src="{% static 'Nexus Freelancing logo design.png' %}" alt="Nexus logo" class="h-8 w-8 rounded-lg object-contain bg-white">
+                <span>The Nexus</span>
+            </a>
+            <button type="button" data-sidebar-close
+                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-900 active:scale-95 transition">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <nav class="p-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition"
+                href="{% url 'landing_page' %}">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-300">home</span>
+                <span class="font-semibold">Bosh sahifa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition"
+                href="{% if request.user.is_authenticated %}{% url 'job_list' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-300">work</span>
+                <span class="font-semibold">Ishlar</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition"
+                href="{% if request.user.is_authenticated %}{% url 'browse_freelancers' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-300">groups</span>
+                <span class="font-semibold">Freelancerlar</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition"
+                href="{% if request.user.is_authenticated %}{% url 'inbox' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-300">chat_bubble</span>
+                <span class="font-semibold">Xabarlar</span>
+            </a>
+
+            <div class="my-3 border-t border-slate-200/60 dark:border-slate-800/60"></div>
+
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-semibold">Boshqaruv paneli</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% if request.user.is_authenticated %}{% url 'client_dashboard' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined">business_center</span>
+                <span class="font-semibold">Mijoz paneli</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% if request.user.is_authenticated %}{% url 'freelancer_dashboard' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined">person</span>
+                <span class="font-semibold">Freelancer paneli</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% if request.user.is_authenticated %}{% url 'profile_settings' %}{% else %}{% url 'register' %}{% endif %}">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-semibold">Sozlamalar</span>
+            </a>
+
+            <div class="my-3 border-t border-slate-200/60 dark:border-slate-800/60"></div>
+
+            {% if request.user.is_authenticated %}
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition text-red-700 dark:text-red-300"
+                href="{% url 'logout' %}">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-semibold">Chiqish</span>
+            </a>
+            {% else %}
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% url 'login' %}">
+                <span class="material-symbols-outlined">login</span>
+                <span class="font-semibold">Kirish</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition"
+                href="{% url 'register' %}">
+                <span class="material-symbols-outlined">person_add</span>
+                <span class="font-semibold">Roʻyxatdan oʻtish</span>
+            </a>
+            {% endif %}
+        </nav>
+    </aside>
+
+    {% block topbar %}
+    <nav
+        class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm shadow-blue-900/5 flex justify-between items-center px-6 py-3">
+        <div class="flex items-center gap-4">
+            <button type="button" data-sidebar-open
+                class="active:scale-95 duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-colors p-2 rounded-full">
+                <span class="material-symbols-outlined text-blue-700 dark:text-blue-400">menu</span>
+            </button>
+            <a class="flex items-center gap-3 text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 font-headline"
+                href="{% url 'landing_page' %}">
+                <img src="{% static 'Nexus Freelancing logo design.png' %}" alt="Nexus logo"
+                    class="h-8 w-8 rounded-lg object-contain bg-white">
+                <span>The Nexus</span>
+            </a>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="text-slate-500 font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% url 'landing_page' %}">Bosh sahifa</a>
+            <a class="text-slate-500 font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% if request.user.is_authenticated %}{% url 'job_list' %}{% else %}{% url 'register' %}{% endif %}">Ishlar</a>
+            <a class="text-slate-500 font-manrope tracking-tight hover:bg-blue-50/50 transition-colors px-3 py-1 rounded-lg"
+                href="{% if request.user.is_authenticated %}{% url 'browse_freelancers' %}{% else %}{% url 'register' %}{% endif %}">Freelancerlar</a>
+        </div>
+        <div class="flex items-center gap-3">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'profile_settings' %}" class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/10 bg-surface-container-low"
+                aria-label="Profil">
+                {% if request.user.avatar %}
+                <img class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" alt="Profil rasmi">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-outline">
+                    <span class="material-symbols-outlined">person</span>
+                </div>
+                {% endif %}
+            </a>
+            <a class="text-slate-500 hover:text-blue-700 text-sm font-semibold" href="{% url 'logout' %}">Chiqish</a>
+            {% else %}
+            <a class="text-slate-500 hover:text-blue-700 text-sm font-semibold"
+                href="{% url 'login' %}">Kirish</a>
+            <a class="bg-primary text-on-primary text-sm font-bold px-4 py-2 rounded-full active:scale-95 transition-transform"
+                href="{% url 'register' %}">Roʻyxatdan oʻtish</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% block main %}
+    <main class="pt-20 pb-24">
+        {% block content %}{% endblock %}
+    </main>
+    {% endblock %}
+
+    {% block bottomnav %}
+    <footer
+        class="md:hidden fixed bottom-0 w-full rounded-t-2xl z-50 bg-white dark:bg-slate-950 border-t border-blue-100/20 dark:border-slate-800 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center w-full px-4 pb-6 pt-2">
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'landing_page' %}">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Bosh sahifa</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'job_list' %}">
+            <span class="material-symbols-outlined">search</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Ishlar</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'browse_freelancers' %}">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Freelancer</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'dashboard' %}">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Profil</span>
+        </a>
+    </footer>
+    {% endblock %}
+
+    {% if messages %}
+    <div id="toast-wrap" class="fixed top-20 right-4 z-[90] w-[min(420px,90vw)] space-y-3">
+        {% for message in messages %}
+        <div class="toast rounded-2xl px-4 py-3 shadow-lg border border-outline-variant/20 bg-white/90 backdrop-blur-xl">
+            <div class="flex items-start gap-3">
+                <div class="mt-0.5">
+                    {% if message.tags == 'error' %}
+                    <span class="material-symbols-outlined text-red-600">error</span>
+                    {% else %}
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    {% endif %}
+                </div>
+                <div class="flex-1">
+                    <div class="text-sm font-bold text-on-surface">
+                        {% if message.tags == 'error' %}Xatolik{% else %}Muvaffaqiyat{% endif %}
+                    </div>
+                    <div class="text-sm text-on-surface-variant mt-0.5">{{ message }}</div>
+                </div>
+                <button type="button" class="toast-close p-1 rounded-full hover:bg-surface-container-low active:scale-95">
+                    <span class="material-symbols-outlined text-outline">close</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block extra_body %}{% endblock %}
+
+    <script>
+        (function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (!sidebar || !overlay) return;
+
+            function openSidebar() {
+                overlay.classList.remove('hidden');
+                sidebar.classList.remove('-translate-x-full');
+                document.documentElement.classList.add('overflow-hidden');
+            }
+
+            function closeSidebar() {
+                overlay.classList.add('hidden');
+                sidebar.classList.add('-translate-x-full');
+                document.documentElement.classList.remove('overflow-hidden');
+            }
+
+            document.addEventListener('click', function (e) {
+                const openBtn = e.target.closest('[data-sidebar-open]');
+                if (openBtn) {
+                    e.preventDefault();
+                    openSidebar();
+                    return;
+                }
+
+                const closeBtn = e.target.closest('[data-sidebar-close]');
+                if (closeBtn) {
+                    e.preventDefault();
+                    closeSidebar();
+                    return;
+                }
+
+                if (e.target === overlay) {
+                    closeSidebar();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const wrap = document.getElementById('toast-wrap');
+            if (!wrap) return;
+
+            function closeToast(el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-6px)';
+                setTimeout(() => el.remove(), 200);
+            }
+
+            wrap.querySelectorAll('.toast').forEach((el) => {
+                el.style.transition = 'opacity 200ms ease, transform 200ms ease';
+                setTimeout(() => closeToast(el), 3500);
+            });
+
+            wrap.addEventListener('click', (e) => {
+                const btn = e.target.closest('.toast-close');
+                if (!btn) return;
+                const toast = btn.closest('.toast');
+                if (toast) closeToast(toast);
+            });
+        })();
+    </script>
+</body>
+
+</html>

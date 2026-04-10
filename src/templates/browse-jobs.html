@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Ishlarni ko‘rish | The Nexus{% endblock %}
+{% block topbar %}{% endblock %}
+{% block bottomnav %}{% endblock %}
+{% block body_class %}bg-surface text-on-surface min-h-screen pb-24{% endblock %}
+
+{% block main %}
+<header
+        class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm shadow-blue-900/5 flex justify-between items-center px-6 py-3">
+        <div class="flex items-center gap-4">
+            <a class="text-blue-700 dark:text-blue-400 p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200"
+                href="{% url 'landing_page' %}" aria-label="Orqaga">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <button type="button" data-sidebar-open
+                class="material-symbols-outlined text-blue-700 dark:text-blue-400 active:scale-95 duration-200 p-2 hover:bg-blue-50/50 rounded-full">menu</button>
+            <span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">The Nexus</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-2 py-1"
+                    href="{% url 'landing_page' %}">Bosh sahifa</a>
+                <a class="text-blue-700 font-bold font-inter text-sm px-2 py-1" href="{% url 'job_list' %}">Ishlar</a>
+                <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-2 py-1"
+                    href="{% url 'inbox' %}">Xabarlar</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-blue-50 overflow-hidden ring-2 ring-primary-container/10">
+                <img alt="Foydalanuvchi profili" class="w-full h-full object-cover"
+                    data-alt="Close-up professional portrait of a smiling designer in a modern studio environment with warm natural lighting"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCupTKwZBaZJV6noDmC7Mbf_Hd3iDeFLtwnOmyB5Ge7ewC26adyBtggfN4N61G5S5OjewNKOH6gP0VeM3bVxoLscQN7HTq8WVo0lIIo8FhgJ2Po4NSQE-CDuFRLhWyrmiwsnEJ_u_GfL3BFf0u3QUqbRckj79c24Fcr7NNr5Kvd4tchyjJfd4dj31Azbu9Y-S7yV15aAy4Jmgmgj44SHvj2wsFghxeg35ZVci7SItufxnKFGB_xmP6H3NRBIQ-LNuqcBw6eyf9P60I" />
+            </div>
+        </div>
+    </header>
+    <main class="pt-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <section class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-2xl leading-[1.1]">
+                Keyingi <span class="text-primary italic">loyiha</span>ingizni toping.
+            </h1>
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-outline">search</span>
+                </div>
+                <input
+                    class="w-full pl-14 pr-32 py-5 bg-surface-container-lowest rounded-2xl shadow-sm focus:ring-2 focus:ring-primary/20 border-none text-lg placeholder:text-outline/60"
+                    placeholder="Ish nomi, kalit so‘z yoki mijoz bo‘yicha qidiring..." type="text" />
+                <div class="absolute right-3 inset-y-3">
+                    <button
+                        class="h-full bg-primary text-on-primary px-8 rounded-xl font-semibold tracking-tight hover:brightness-110 active:scale-95 transition-all">Qidirish</button>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6 overflow-x-auto hide-scrollbar pb-2">
+                <a class="{% if not selected_category %}bg-primary text-on-primary{% else %}bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high{% endif %} px-6 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors"
+                    href="{% url 'job_list' %}">Barchasi</a>
+                {% for category in categories %}
+                <a class="{% if selected_category == category.slug %}bg-primary text-on-primary{% else %}bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high{% endif %} px-6 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors"
+                    href="{% url 'job_list' %}?category={{ category.slug }}">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </section>
+        <div class="flex flex-col lg:flex-row gap-10 items-start">
+            <aside class="w-full lg:w-72 space-y-8 bg-surface-container-low p-8 rounded-3xl sticky top-28">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Loyiha turi</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input checked=""
+                                class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20"
+                                type="checkbox" />
+                            <span
+                                class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">Belgilangan narx</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20"
+                                type="checkbox" />
+                            <span
+                                class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">Soatbay</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Byudjet</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input class="w-5 h-5 border-outline-variant text-primary focus:ring-primary/20"
+                                name="budget" type="radio" />
+                            <span
+                                class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">$500
+                                - $1k</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input checked="" class="w-5 h-5 border-outline-variant text-primary focus:ring-primary/20"
+                                name="budget" type="radio" />
+                            <span
+                                class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">$1k
+                                - $5k</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input class="w-5 h-5 border-outline-variant text-primary focus:ring-primary/20"
+                                name="budget" type="radio" />
+                            <span
+                                class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">$5k
+                                - $10k+</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Tajriba</h3>
+                    <select
+                        class="w-full bg-surface-container-lowest border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-primary/10">
+                        <option>Mutaxassis (7+ yil)</option>
+                        <option>O‘rta</option>
+                        <option>Boshlang‘ich</option>
+                    </select>
+                </div>
+            </aside>
+            <div class="flex-1 w-full space-y-4">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-sm font-medium text-outline">{{ jobs_count }} ta ish topildi</span>
+                    <div class="flex items-center gap-2 text-sm font-bold text-primary cursor-pointer">
+                        <span>Saralash: Eng yangi</span>
+                        <span class="material-symbols-outlined text-lg">expand_more</span>
+                    </div>
+                </div>
+                {% if jobs %}
+                {% for job in jobs %}
+                <article
+                    class="group bg-surface-container-lowest p-6 rounded-3xl transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:bg-white flex flex-col md:flex-row gap-6 items-start">
+                    <div class="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 bg-blue-50 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-700">work</span>
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <a href="{% url 'job_detail' job.id %}"
+                                    class="text-xl font-bold tracking-tight text-on-surface group-hover:text-primary transition-colors">
+                                    {{ job.title }}
+                                </a>
+                                <p class="text-sm font-medium text-outline">
+                                    {{ job.client.username }}{% if job.category %} • {{ job.category.name }}{% endif %}
+                                </p>
+                            </div>
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-outline py-1 px-3 bg-surface-container-low rounded-full">{{ job.status }}</span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-2xl line-clamp-2">
+                            {{ job.description }}
+                        </p>
+                        {% if job.skills.all|length %}
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            {% for skill in job.skills.all %}
+                            <span
+                                class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">{{ skill.name }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div
+                        class="md:text-right flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-4">
+                        <div>
+                            <p class="text-lg font-bold text-primary">${{ job.budget_min }} – ${{ job.budget_max }}</p>
+                            <p class="text-xs font-medium text-outline">Byudjet</p>
+                        </div>
+                        <a href="{% url 'job_detail' job.id %}"
+                            class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform">Ko‘rish</a>
+                    </div>
+                </article>
+                {% endfor %}
+                {% else %}
+                <div class="bg-surface-container-lowest p-8 rounded-3xl text-on-surface-variant">
+                    Ishlar topilmadi.
+                </div>
+                {% endif %}
+                <div class="pt-8 flex justify-center">
+                    <a href="{% url 'post_job' %}"
+                        class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold">Ish joylash</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav
+        class="md:hidden fixed bottom-0 w-full rounded-t-2xl z-50 bg-white dark:bg-slate-950 border-t border-blue-100/20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 pb-safe pt-2">
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'landing_page' %}">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Bosh sahifa</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-blue-100 text-blue-900 rounded-xl px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'job_list' %}">
+            <span class="material-symbols-outlined">search</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Ishlar</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'inbox' %}">
+            <span class="material-symbols-outlined">chat_bubble</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Xabarlar</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 active:scale-90 transition-transform"
+            href="{% url 'dashboard' %}">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider">Profil</span>
+        </a>
+    </nav>
+{% endblock %}
