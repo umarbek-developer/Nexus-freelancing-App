@@ -3,14 +3,15 @@ from django.db import models
 
 
 class User(AbstractUser):
-    FREELANCER = 'freelancer'
-    CLIENT = 'client'
     ROLE_CHOICES = [
-        (FREELANCER, 'Freelancer'),
-        (CLIENT, 'Client'),
+        ('freelancer', 'Freelancer'),
+        ('client', 'Client'),
     ]
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=CLIENT)
+    FREELANCER = 'freelancer'
+    CLIENT = 'client'
+
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='client')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=20, blank=True)

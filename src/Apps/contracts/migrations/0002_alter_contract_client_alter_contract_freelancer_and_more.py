@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contracts', '0001_initial'),
-        ('jobs', '0002_alter_category_options_alter_job_options_and_more'),
+        ('jobs', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

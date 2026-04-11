@@ -2,8 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.db.models import Sum
-from django.utils import timezone
 
 from .models import User
 from .forms import ProfileForm
@@ -17,7 +15,7 @@ def landing_page(request):
 
 
 def csrf_failure(request, reason=""):
-    messages.error(request, "Xavfsizlik tekshiruvi xatosi. Qayta urinib ko‘ring.")
+    messages.error(request, "Xavfsizlik tekshiruvi xatosi. Qayta urinib ko'ring.")
     return redirect("login")
 
 
@@ -70,34 +68,33 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    if hasattr(request.user, "role") and request.user.role == User.FREELANCER:
+    if request.user.role == User.FREELANCER:
         return redirect("freelancer_dashboard")
     return redirect("client_dashboard")
 
 
 @login_required
 def client_dashboard(request):
-    now = timezone.localdate()
-    month_start = now.replace(day=1)
+    my_jobs = Job.objects.filter(client=request.user)
 
-    active_jobs_count = Job.objects.filter(client=request.user).exclude(status__in=["completed", "closed"]).count()
+    active_jobs_count = 0
+    for job in my_jobs:
+        if job.status not in ["completed", "closed"]:
+            active_jobs_count += 1
 
-    spent_total = (
-        Contract.objects.filter(client=request.user)
-        .aggregate(total=Sum("amount"))
-        .get("total")
-    ) or 0
+    my_contracts = Contract.objects.filter(client=request.user)
+    spent_total = 0
+    for c in my_contracts:
+        spent_total += c.amount
 
-    active_projects_this_month = Contract.objects.filter(
-        client=request.user,
-        status="active",
-        created_at__date__gte=month_start,
-    ).count()
+    active_projects_this_month = 0
+    for contract in my_contracts:
+        if contract.status == "active":
+            active_projects_this_month += 1
 
-    pending_proposals_count = Proposal.objects.filter(
-        job__client=request.user,
-        status="pending",
-    ).count()
+    pending_proposals_count = 0
+    for job in my_jobs:
+        pending_proposals_count += Proposal.objects.filter(job=job, status="pending").count()
 
     context = {
         "active_jobs_count": active_jobs_count,
@@ -110,24 +107,29 @@ def client_dashboard(request):
 
 @login_required
 def freelancer_dashboard(request):
-    contract_total = (
-        Contract.objects.filter(freelancer=request.user)
-        .aggregate(total=Sum("amount"))
-        .get("total")
-    ) or 0
+    my_contracts = Contract.objects.filter(freelancer=request.user)
+    my_proposals = Proposal.objects.filter(freelancer=request.user)
 
-    proposal_total = (
-        Proposal.objects.filter(freelancer=request.user)
-        .exclude(status="rejected")
-        .aggregate(total=Sum("proposed_rate"))
-        .get("total")
-    ) or 0
+    contract_total = 0
+    for c in my_contracts:
+        contract_total += c.amount
+
+    proposal_total = 0
+    for p in my_proposals:
+        if p.status != "rejected":
+            proposal_total += p.proposed_rate
 
     earned_total = contract_total + proposal_total
 
-    active_contracts_count = Contract.objects.filter(freelancer=request.user, status="active").count()
+    active_contracts_count = 0
+    for c in my_contracts:
+        if c.status == "active":
+            active_contracts_count += 1
 
-    active_proposals_count = Proposal.objects.filter(freelancer=request.user).exclude(status="rejected").count()
+    active_proposals_count = 0
+    for p in my_proposals:
+        if p.status != "rejected":
+            active_proposals_count += 1
 
     context = {
         "earned_total": earned_total,

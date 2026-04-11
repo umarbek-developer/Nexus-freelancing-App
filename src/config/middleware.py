@@ -5,27 +5,31 @@ class LoginRequiredMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-        self.allowed_prefixes = [
-            "/accounts/login/",
-            "/accounts/register/",
-            "/accounts/logout/",
-            "/admin/",
-            "/static/",
-            "/media/",
-        ]
-
     def __call__(self, request):
-        path = request.path or "/"
-
         if request.user.is_authenticated:
             return self.get_response(request)
 
-        if path == "/":
+        path = request.path
+
+        if path == '/':
             return self.get_response(request)
 
-        for p in self.allowed_prefixes:
-            if path.startswith(p):
-                return self.get_response(request)
+        if path.startswith('/accounts/login/'):
+            return self.get_response(request)
 
-        return redirect("register")
+        if path.startswith('/accounts/register/'):
+            return self.get_response(request)
 
+        if path.startswith('/accounts/logout/'):
+            return self.get_response(request)
+
+        if path.startswith('/admin/'):
+            return self.get_response(request)
+
+        if path.startswith('/static/'):
+            return self.get_response(request)
+
+        if path.startswith('/media/'):
+            return self.get_response(request)
+
+        return redirect('register')

@@ -10,7 +10,7 @@ class FreelancerProfile(models.Model):
     availability = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.title}"
+        return self.user.username + ' - ' + self.title
 
 
 class PortfolioItem(models.Model):

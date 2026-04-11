@@ -8,7 +8,7 @@ class Conversation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Conversation #{self.pk}"
+        return 'Conversation #' + str(self.pk)
 
 
 class Message(models.Model):
@@ -19,4 +19,4 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.sender.username}: {self.content[:30]}"
+        return self.sender.username + ': ' + self.content[:30]

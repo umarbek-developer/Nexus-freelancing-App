@@ -17,4 +17,4 @@ class Proposal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.freelancer.username} -> {self.job.title}"
+        return self.freelancer.username + ' -> ' + self.job.title

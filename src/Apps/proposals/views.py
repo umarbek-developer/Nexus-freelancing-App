@@ -33,14 +33,14 @@ def submit_proposal(request, job_pk):
 
 @login_required
 def my_proposals(request):
-    proposals = Proposal.objects.filter(freelancer=request.user).select_related("job")
+    proposals = Proposal.objects.filter(freelancer=request.user)
     return render(request, "my-proposals.html", {"proposals": proposals})
 
 
 @login_required
 def view_proposals(request, job_pk):
     job = get_object_or_404(Job, pk=job_pk)
-    proposals = Proposal.objects.filter(job=job).select_related("freelancer")
+    proposals = Proposal.objects.filter(job=job)
     return render(request, "job-proposals.html", {"job": job, "proposals": proposals})
 
 
@@ -61,15 +61,15 @@ def accept_proposal(request, pk):
     job.status = "in_progress"
     job.save()
 
-    Contract.objects.get_or_create(
-        job=job,
-        defaults={
-            "client": job.client,
-            "freelancer": proposal.freelancer,
-            "amount": proposal.proposed_rate,
-            "status": "active",
-        },
-    )
+    contract_exists = Contract.objects.filter(job=job).exists()
+    if not contract_exists:
+        Contract.objects.create(
+            job=job,
+            client=job.client,
+            freelancer=proposal.freelancer,
+            amount=proposal.proposed_rate,
+            status="active",
+        )
 
     messages.success(request, "Taklif qabul qilindi. Shartnoma yaratildi.")
     return redirect("view_proposals", job_pk=job.pk)

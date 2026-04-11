@@ -7,35 +7,28 @@ from .models import Contract
 
 @login_required
 def my_contracts(request):
-    contracts = (
-        Contract.objects.select_related("job", "client", "freelancer")
-        .filter(client=request.user)
-        .order_by("-created_at")
-    )
-    if getattr(request.user, "role", "") == "freelancer":
-        contracts = (
-            Contract.objects.select_related("job", "client", "freelancer")
-            .filter(freelancer=request.user)
-            .order_by("-created_at")
-        )
+    if request.user.role == "freelancer":
+        contracts = Contract.objects.filter(freelancer=request.user)
+    else:
+        contracts = Contract.objects.filter(client=request.user)
 
     return render(request, "contracts.html", {"contracts": contracts})
 
 
 @login_required
 def contract_detail(request, pk):
-    contract = get_object_or_404(
-        Contract.objects.select_related("job", "client", "freelancer"),
-        pk=pk,
-    )
+    contract = get_object_or_404(Contract, pk=pk)
+
     if contract.client != request.user and contract.freelancer != request.user:
         return redirect("dashboard")
+
     return render(request, "contract-detail.html", {"contract": contract})
 
 
 @login_required
 def complete_contract(request, pk):
     contract = get_object_or_404(Contract, pk=pk)
+
     if contract.client != request.user:
         return redirect("dashboard")
 

@@ -7,25 +7,18 @@ from .models import FreelancerProfile, PortfolioItem
 
 @login_required
 def browse_freelancers(request):
-    profiles = (
-        FreelancerProfile.objects.select_related("user")
-        .prefetch_related("skills")
-        .all()
-        .order_by("-id")
-    )
+    profiles = FreelancerProfile.objects.all()
     return render(request, "Browse-Freelancer.html", {"profiles": profiles})
 
 
 @login_required
 def freelancer_profile(request, pk):
-    profile = get_object_or_404(
-        FreelancerProfile.objects.select_related("user").prefetch_related("skills"),
-        pk=pk,
-    )
-    portfolio = PortfolioItem.objects.filter(freelancer=profile.user).order_by("-created_at")
-    reviews = Review.objects.filter(reviewee=profile.user).select_related("reviewer").order_by("-created_at")
-    return render(
-        request,
-        "freelancer-profile.html",
-        {"profile": profile, "portfolio": portfolio, "reviews": reviews},
-    )
+    profile = get_object_or_404(FreelancerProfile, pk=pk)
+    portfolio = PortfolioItem.objects.filter(freelancer=profile.user)
+    reviews = Review.objects.filter(reviewee=profile.user)
+
+    return render(request, "freelancer-profile.html", {
+        "profile": profile,
+        "portfolio": portfolio,
+        "reviews": reviews,
+    })
