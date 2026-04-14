@@ -6,41 +6,129 @@
 <div class="max-w-5xl mx-auto px-6 py-10">
     <div class="flex items-center justify-between gap-4 mb-8">
         <div class="flex items-center gap-3">
-            <a class="text-primary font-bold" href="{% url 'my_contracts' %}">Orqaga</a>
+            <button type="button" onclick="history.back()"
+                class="text-primary font-bold flex items-center gap-1 hover:opacity-75 transition-opacity">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Orqaga
+            </button>
             <h1 class="text-3xl font-headline font-extrabold">Shartnoma #{{ contract.id }}</h1>
         </div>
-        <a class="text-primary font-bold" href="{% url 'job_detail' contract.job.id %}">Ish</a>
+        <a class="text-primary font-bold hover:underline" href="{% url 'job_detail' contract.job.id %}">Ishni ko'rish</a>
     </div>
 
-    <div class="bg-surface-container-lowest rounded-3xl p-8 space-y-4">
+    {# ── Contract info ───────────────────────────────── #}
+    <div class="bg-surface-container-lowest rounded-3xl p-8 space-y-4 mb-6">
         <div class="text-lg font-bold">{{ contract.job.title }}</div>
         <div class="text-sm text-on-surface-variant">
             Mijoz: <span class="font-semibold">{{ contract.client.username }}</span>
-            · Freelancer: <span class="font-semibold">{{ contract.freelancer.username }}</span>
+            &nbsp;·&nbsp;
+            Freelancer: <span class="font-semibold">{{ contract.freelancer.username }}</span>
         </div>
         <div class="text-sm text-on-surface-variant">
-            Holat: <span class="font-semibold">{{ contract.status }}</span>
+            Holat:
+            <span class="font-semibold inline-block px-2 py-0.5 rounded-full text-xs
+                {% if contract.status == 'active' %}bg-blue-100 text-blue-700
+                {% elif contract.status == 'completed' %}bg-green-100 text-green-700
+                {% else %}bg-red-100 text-red-600{% endif %}">
+                {{ contract.status }}
+            </span>
         </div>
         <div class="text-sm text-on-surface-variant">
-            Summa: <span class="font-semibold text-primary">${{ contract.amount|floatformat:0 }}</span>
+            Summa: <span class="font-semibold text-primary text-lg">${{ contract.amount|floatformat:0 }}</span>
+        </div>
+        <div class="text-sm text-on-surface-variant">
+            Yaratildi: <span class="font-semibold">{{ contract.created_at|date:"d.m.Y" }}</span>
         </div>
 
-        {% if request.user == contract.client and contract.status != 'completed' %}
-        <form method="post" action="{% url 'complete_contract' contract.id %}" class="pt-4">
+        {# Complete button — only client, only when active #}
+        {# #6: JS confirmation before fund transfer to prevent accidents #}
+        {% if request.user == contract.client and contract.status == 'active' %}
+        <form method="post" action="{% url 'complete_contract' contract.id %}" class="pt-4" id="complete-form">
             {% csrf_token %}
-            <button type="submit"
+            <button type="button" onclick="confirmComplete()"
                 class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full active:scale-95 transition-transform">
                 Yakunlash
             </button>
         </form>
         {% endif %}
 
-        {% if contract.status == 'completed' %}
-        <div class="pt-4">
-            <a class="text-primary font-bold" href="{% url 'leave_review' contract.id %}">Izoh qoldirish</a>
+        {# #14: Dispute button — either party on active contract #}
+        {% if contract.status == 'active' and not open_dispute %}
+        <div class="pt-2">
+            <a href="{% url 'open_dispute' contract.id %}"
+                class="inline-flex items-center gap-2 text-red-600 font-bold text-sm hover:underline">
+                <span class="material-symbols-outlined text-lg">gavel</span>
+                Nizo ochish
+            </a>
+        </div>
+        {% elif open_dispute %}
+        <div class="pt-2 flex items-center gap-2 text-sm text-amber-700 font-semibold">
+            <span class="material-symbols-outlined text-lg">gavel</span>
+            Nizo ochilgan — admin ko'rib chiqmoqda.
+        </div>
+        {% endif %}
+
+        {# Leave review — only when completed and not yet reviewed #}
+        {% if contract.status == 'completed' and not already_reviewed %}
+        <div class="pt-2">
+            <a class="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+                href="{% url 'leave_review' contract.id %}">
+                <span class="material-symbols-outlined text-lg">star</span>
+                Izoh qoldirish
+            </a>
+        </div>
+        {% elif contract.status == 'completed' and already_reviewed %}
+        <div class="pt-2 text-sm text-green-700 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-lg">check_circle</span>
+            Siz allaqachon izoh qoldirdingiz.
         </div>
         {% endif %}
     </div>
+
+    {# ── Reviews ─────────────────────────────────────── #}
+    {% if reviews %}
+    <section class="space-y-4">
+        <h2 class="text-xl font-bold">Izohlar ({{ reviews.count }})</h2>
+        {% for review in reviews %}
+        <div class="bg-surface-container-lowest rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-3">
+                <div class="font-bold text-on-surface">{{ review.reviewer.username }}</div>
+                <div class="flex items-center gap-1">
+                    {% for i in "12345" %}
+                    <span class="material-symbols-outlined text-lg {% if forloop.counter <= review.rating %}text-amber-400{% else %}text-outline-variant{% endif %}"
+                        style="font-variation-settings:'FILL' 1">star</span>
+                    {% endfor %}
+                    <span class="text-sm font-bold ml-1">{{ review.rating }}/5</span>
+                </div>
+            </div>
+            <p class="text-sm text-on-surface-variant leading-relaxed">{{ review.comment }}</p>
+            <p class="text-xs text-outline mt-3">{{ review.created_at|date:"d.m.Y H:i" }}</p>
+        </div>
+        {% endfor %}
+    </section>
+    {% elif contract.status == 'completed' %}
+    <div class="bg-surface-container-lowest rounded-2xl p-6 text-on-surface-variant text-center">
+        Hali izohlar yo'q.
+    </div>
+    {% endif %}
+
 </div>
 {% endblock %}
 
+{% block extra_body %}
+<script>
+/* #6: Confirmation dialog before completing contract / transferring funds */
+function confirmComplete() {
+    const amount = "{{ contract.amount|floatformat:0 }}";
+    const name   = "{{ contract.freelancer.username }}";
+    const ok = confirm(
+        'Tasdiqlash\n\n' +
+        name + ' ga $' + amount + ' o\u02bctkazilsinmi?\n\n' +
+        'Bu amal qaytarib bo\u02bclmaydi. Davom etasizmi?'
+    );
+    if (ok) {
+        document.getElementById('complete-form').submit();
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ro'yxatdan o'tish | The Nexus</title>
+    <link rel="icon" href="{% static 'Nexus Freelancing logo design.png' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col items-center justify-center px-4 py-12 font-[Inter]">
+
+    <a href="{% url 'landing_page' %}" class="flex items-center gap-3 mb-10">
+        <img src="{% static 'Nexus Freelancing logo design.png' %}" alt="Nexus" class="h-10 w-10 rounded-xl bg-white shadow">
+        <span class="text-2xl font-extrabold tracking-tighter text-blue-800">The Nexus</span>
+    </a>
+
+    <div class="w-full max-w-3xl">
+        <h1 class="text-3xl font-extrabold text-slate-800 text-center mb-2">Kim sifatida ro'yxatdan o'tmoqchisiz?</h1>
+        <p class="text-slate-500 text-center mb-10">Rolingizni tanlang. Keyinchalik o'zgartirish mumkin emas.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {# ── Client card ─── #}
+            <a href="{% url 'register_client' %}"
+               class="group relative bg-white border-2 border-slate-200 hover:border-blue-500 rounded-3xl p-8 flex flex-col gap-4 transition-all duration-200 hover:shadow-xl hover:-translate-y-1">
+                <div class="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">business_center</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-800 mb-1">Ish beruvchi (Mijoz)</h2>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Loyihalaringiz uchun eng yaxshi freelancerlarni toping, ishlarni joylang va natijalarni kuzating.
+                    </p>
+                </div>
+                <ul class="space-y-2 text-sm text-slate-600 mt-2">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-blue-500 text-base">check_circle</span> Ish e'lonlarini joylashtiring</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-blue-500 text-base">check_circle</span> Takliflarni ko'rib chiqing</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-blue-500 text-base">check_circle</span> Shartnomalarni boshqaring</li>
+                </ul>
+                <div class="mt-auto pt-4 flex items-center justify-between">
+                    <span class="text-blue-600 font-bold text-sm">Mijoz sifatida ro'yxatdan o'tish</span>
+                    <span class="material-symbols-outlined text-blue-500 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </div>
+            </a>
+
+            {# ── Freelancer card ─── #}
+            <a href="{% url 'register_freelancer' %}"
+               class="group relative bg-white border-2 border-slate-200 hover:border-emerald-500 rounded-3xl p-8 flex flex-col gap-4 transition-all duration-200 hover:shadow-xl hover:-translate-y-1">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-500 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">laptop_mac</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-800 mb-1">Freelancer</h2>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        O'z ko'nikmalaringizni taklif qiling, mijozlar bilan ishlang va daromad oling.
+                    </p>
+                </div>
+                <ul class="space-y-2 text-sm text-slate-600 mt-2">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-500 text-base">check_circle</span> Ishlarni ko'ring va taklif bering</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-500 text-base">check_circle</span> Hamyon orqali daromad oling</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-500 text-base">check_circle</span> Portfolio yarating</li>
+                </ul>
+                <div class="mt-auto pt-4 flex items-center justify-between">
+                    <span class="text-emerald-600 font-bold text-sm">Freelancer sifatida ro'yxatdan o'tish</span>
+                    <span class="material-symbols-outlined text-emerald-500 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </div>
+            </a>
+
+        </div>
+
+        <p class="text-center text-slate-500 mt-8 text-sm">
+            Allaqachon akkountingiz bormi?
+            <a href="{% url 'login' %}" class="text-blue-600 font-bold hover:underline">Kirish</a>
+        </p>
+    </div>
+
+</body>
+</html>

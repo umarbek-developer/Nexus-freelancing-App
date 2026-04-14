@@ -6,7 +6,11 @@
 <div class="max-w-3xl mx-auto px-6 py-10">
     <div class="flex items-center justify-between gap-4 mb-8">
         <div class="flex items-center gap-3">
-            <a class="text-primary font-bold" href="{% url 'contract_detail' contract.id %}">Orqaga</a>
+            <button type="button" onclick="history.back()"
+                class="text-primary font-bold flex items-center gap-1 hover:opacity-75 transition-opacity">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Orqaga
+            </button>
             <h1 class="text-3xl font-headline font-extrabold">Izoh qoldirish</h1>
         </div>
     </div>

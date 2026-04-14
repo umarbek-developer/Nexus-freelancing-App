@@ -69,7 +69,7 @@
                     </div>
                     <div class="text-white/80 text-sm font-medium">
                         <span class="block text-white font-bold text-base">2k+ professional</span>
-                        Bugun qo‘shilganlar
+                        Bugun qo'shilganlar
                     </div>
                 </div>
             </div>
@@ -151,11 +151,23 @@
                             Kirish
                         </button>
                     </form>
-                    <footer class="mt-12 text-center">
-                        <p class="text-on-surface-variant font-body">
-                            Akkount yo‘qmi?
+                    <footer class="mt-8 text-center space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="{% url 'login_client' %}"
+                                class="flex items-center justify-center gap-2 border-2 border-blue-200 text-blue-700 font-bold text-sm px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
+                                <span class="material-symbols-outlined text-base">business_center</span>
+                                Mijoz kirish
+                            </a>
+                            <a href="{% url 'login_freelancer' %}"
+                                class="flex items-center justify-center gap-2 border-2 border-emerald-200 text-emerald-700 font-bold text-sm px-4 py-3 rounded-xl hover:bg-emerald-50 transition-colors">
+                                <span class="material-symbols-outlined text-base">laptop_mac</span>
+                                Freelancer kirish
+                            </a>
+                        </div>
+                        <p class="text-on-surface-variant font-body text-sm">
+                            Akkount yo'qmi?
                             <a class="text-primary font-bold hover:underline underline-offset-4 decoration-2 transition-all"
-                                href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+                                href="{% url 'register' %}">Ro'yxatdan o'tish</a>
                         </p>
                     </footer>
                 </div>
@@ -172,7 +184,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-xl" data-icon="account_balance">account_balance</span>
-                <span class="text-xs font-bold tracking-widest uppercase">Xavfsiz to‘lovlar</span>
+                <span class="text-xs font-bold tracking-widest uppercase">Xavfsiz to'lovlar</span>
             </div>
         </div>
 </main>

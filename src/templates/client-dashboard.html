@@ -15,235 +15,246 @@
 {% endblock %}
 
 {% block main %}
-<header
-        class="fixed top-0 w-full z-50 glass-header shadow-sm shadow-blue-900/5 px-6 py-3 flex justify-between items-center h-16">
-        <div class="flex items-center gap-4">
-            <a class="text-blue-700 dark:text-blue-400 p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200"
-                href="{% url 'landing_page' %}" aria-label="Orqaga">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </a>
-            <button type="button" data-sidebar-open class="p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200">
-                <span class="material-symbols-outlined text-blue-700 dark:text-blue-400">menu</span>
-            </button>
-            <span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 font-headline">The
-                Nexus</span>
-        </div>
-        <nav class="hidden md:flex items-center gap-8">
-            <a class="text-blue-700 font-bold font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
-                href="{% url 'landing_page' %}">Bosh sahifa</a>
-            <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
-                href="{% url 'job_list' %}">Ishlar</a>
-            <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
-                href="{% url 'inbox' %}">Xabarlar</a>
-        </nav>
-        <div class="flex items-center gap-3">
-            <div class="hidden md:block text-right mr-2">
-                <p class="text-xs font-bold text-on-surface">Alex Rivera</p>
-                <p class="text-[10px] text-slate-500 uppercase tracking-widest">Mijoz akkaunti</p>
-            </div>
-            <a href="{% url 'profile_settings' %}" class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden"
-                aria-label="Profil">
-                {% if request.user.avatar %}
-                <img alt="Profil rasmi" class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" />
-                {% else %}
-                <div class="w-full h-full bg-surface-container-low flex items-center justify-center text-outline">
-                    <span class="material-symbols-outlined">person</span>
-                </div>
-                {% endif %}
-            </a>
-        </div>
-    </header>
-    <main class="pt-24 pb-24 md:pb-12 px-6 max-w-7xl mx-auto flex flex-col gap-8">
-        <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div
-                class="md:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm relative overflow-hidden flex flex-col justify-between group">
-                <div
-                    class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl group-hover:bg-primary/10 transition-colors duration-500">
-                </div>
-                <div>
-                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">Umumiy ko‘rinish</h2>
-                    <p class="text-on-surface-variant max-w-md">Bu oy sizda {{ active_projects_this_month }} ta faol loyiha mavjud.</p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mt-10">
-                    <div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Faol ishlar</p>
-                        <p class="text-4xl font-headline font-bold text-primary">{{ active_jobs_count }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Sarflangan summa</p>
-                        <p class="text-4xl font-headline font-bold text-on-surface">${{ spent_total|floatformat:0 }}</p>
-                    </div>
-                    <div class="col-span-2 md:col-span-1">
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Kutilayotgan takliflar</p>
-                        <p class="text-4xl font-headline font-bold text-tertiary">{{ pending_proposals_count }}</p>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="md:col-span-4 bg-primary-container text-white rounded-xl p-8 flex flex-col justify-between shadow-lg shadow-primary/20 bg-gradient-to-br from-primary to-primary-container">
-                <div>
-                    <span class="material-symbols-outlined text-4xl mb-4">rocket_launch</span>
-                    <h3 class="text-2xl font-bold font-headline leading-tight">Maqsadingizni kengaytiring</h3>
-                    <p class="mt-2 text-primary-fixed/80 text-sm leading-relaxed">Keyingi loyihangiz uchun mos freelancer toping.</p>
-                </div>
-                <a href="{% url 'post_job' %}"
-                    class="w-full text-center bg-white text-primary font-bold py-3 px-6 rounded-full mt-6 active:scale-95 transition-transform">Yangi ish joylash</a>
-            </div>
-        </section>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <section class="lg:col-span-2 space-y-4">
-                <div class="flex justify-between items-end mb-2">
-                    <h3 class="text-xl font-bold tracking-tight">Faol shartnomalar</h3>
-                    <a class="text-primary font-bold text-sm" href="{% url 'job_list' %}">Hammasini ko‘rish</a>
-                </div>
-                <div class="space-y-4">
-                    <div
-                        class="bg-surface-container-lowest p-6 rounded-xl hover:bg-surface-container-low transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary">architecture</span>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-on-surface">Modernist Villa Rendering</h4>
-                                <p class="text-xs text-on-surface-variant font-medium">Freelancer: Elena Sokolov</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-8">
-                            <div class="text-right">
-                                <p class="text-xs text-slate-400 uppercase font-bold tracking-tighter">Byudjet</p>
-                                <p class="font-bold">$4,200</p>
-                            </div>
-                            <div class="flex gap-1">
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                                <div class="w-6 h-2 rounded-full bg-surface-container-high"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-surface-container-lowest p-6 rounded-xl hover:bg-surface-container-low transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary">design_services</span>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-on-surface">Eco-Tech Office Layout</h4>
-                                <p class="text-xs text-on-surface-variant font-medium">Freelancer: Marcus Thorne</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-8">
-                            <div class="text-right">
-                                <p class="text-xs text-slate-400 uppercase font-bold tracking-tighter">Byudjet</p>
-                                <p class="font-bold">$8,500</p>
-                            </div>
-                            <div class="flex gap-1">
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                                <div class="w-6 h-2 rounded-full bg-surface-container-high"></div>
-                                <div class="w-6 h-2 rounded-full bg-surface-container-high"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-surface-container-lowest p-6 rounded-xl hover:bg-surface-container-low transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary">token</span>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-on-surface">3D Component Library</h4>
-                                <p class="text-xs text-on-surface-variant font-medium">Freelancer: Jamie Chen</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-8">
-                            <div class="text-right">
-                                <p class="text-xs text-slate-400 uppercase font-bold tracking-tighter">Byudjet</p>
-                                <p class="font-bold">$2,100</p>
-                            </div>
-                            <div class="flex gap-1">
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                                <div class="w-6 h-2 rounded-full bg-primary"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <aside class="space-y-8">
-                <div>
-                    <h3 class="text-lg font-bold mb-4">So‘nggi ish e’lonlari</h3>
-                    <div class="bg-surface-container-low rounded-2xl p-6 space-y-6">
-                        <div class="space-y-2">
-                            <p class="text-xs font-bold text-primary flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-primary"></span>
-                                FAOL
-                            </p>
-                            <h4 class="font-bold leading-tight">Landscape Design for Coastal Retreat</h4>
-                            <p class="text-xs text-on-surface-variant line-clamp-2">Looking for a landscape architect
-                                with expertise in xeriscaping and coastal flora...</p>
-                            <div class="pt-2 flex items-center justify-between">
-                                <span class="text-xs font-semibold text-slate-500">14 ta taklif</span>
-                                <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-                            </div>
-                        </div>
-                        <div class="border-t border-outline-variant/15"></div>
-                        <div class="space-y-2">
-                            <p class="text-xs font-bold text-slate-400 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-slate-300"></span>
-                                QORALAMA
-                            </p>
-                            <h4 class="font-bold leading-tight">Sustainable Materials Research</h4>
-                            <div class="pt-2 flex items-center justify-between">
-                                <span class="text-xs font-semibold text-slate-500">Oxirgi tahrir: 2 kun oldin</span>
-                                <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-surface-dim rounded-2xl p-6">
-                    <h3 class="text-on-surface font-bold mb-4">To‘lovlar xulosasi</h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm font-medium text-on-surface-variant">Keyingi to‘lov sanasi</span>
-                            <span class="text-sm font-bold">Oct 12</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm font-medium text-on-surface-variant">Avto-to‘ldirish</span>
-                            <div class="w-10 h-5 bg-primary/20 rounded-full relative">
-                                <div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
-                            </div>
-                        </div>
-                        <button
-                            class="w-full bg-primary/10 text-primary font-bold py-3 rounded-xl mt-2 hover:bg-primary/20 transition-colors">Hamyonni
-                            boshqarish</button>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </main>
-    <nav
-        class="md:hidden fixed bottom-0 w-full bg-white dark:bg-slate-950 border-t border-blue-100/20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl z-50 flex justify-around items-center px-4 pb-4 pt-2">
-        <a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 rounded-xl px-5 py-2 active:scale-90 transition-transform"
-            href="{% url 'dashboard' %}">
-            <span class="material-symbols-outlined" data-icon="home">home</span>
-            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Bosh sahifa</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
-            href="{% url 'job_list' %}">
-            <span class="material-symbols-outlined" data-icon="search">search</span>
-            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Ishlar</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
-            href="{% url 'inbox' %}">
-            <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
-            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Xabarlar</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
-            href="{% url 'profile_settings' %}">
-            <span class="material-symbols-outlined" data-icon="person">person</span>
-            <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Profil</span>
-        </a>
+<header class="fixed top-0 w-full z-50 glass-header shadow-sm shadow-blue-900/5 px-6 py-3 flex justify-between items-center h-16">
+    <div class="flex items-center gap-4">
+        <button type="button" onclick="history.back()"
+            class="text-blue-700 dark:text-blue-400 p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200"
+            aria-label="Orqaga">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <button type="button" data-sidebar-open class="p-2 rounded-full hover:bg-blue-50/50 active:scale-95 duration-200">
+            <span class="material-symbols-outlined text-blue-700 dark:text-blue-400">menu</span>
+        </button>
+        <span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 font-headline">The Nexus</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-8">
+        <a class="text-blue-700 font-bold font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
+            href="{% url 'landing_page' %}">Bosh sahifa</a>
+        <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
+            href="{% url 'job_list' %}">Ishlar</a>
+        <a class="text-slate-500 font-inter text-sm hover:bg-blue-50/50 transition-colors px-3 py-2 rounded-lg"
+            href="{% url 'inbox' %}">Xabarlar</a>
     </nav>
+    <div class="flex items-center gap-3">
+        <div class="hidden md:block text-right mr-2">
+            <p class="text-xs font-bold text-on-surface">
+                {{ request.user.get_full_name|default:request.user.username }}
+            </p>
+            <p class="text-[10px] text-slate-500 uppercase tracking-widest">Mijoz akkaunti</p>
+        </div>
+        <a href="{% url 'profile_settings' %}" class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden" aria-label="Profil">
+            {% if request.user.avatar %}
+            <img alt="Profil rasmi" class="w-full h-full object-cover" src="{{ request.user.avatar.url }}" />
+            {% else %}
+            <div class="w-full h-full bg-surface-container-low flex items-center justify-center text-outline">
+                <span class="material-symbols-outlined">person</span>
+            </div>
+            {% endif %}
+        </a>
+    </div>
+</header>
+
+<main class="pt-24 pb-24 md:pb-12 px-6 max-w-7xl mx-auto flex flex-col gap-8">
+
+    {# ── Stats row ─────────────────────────────────────────── #}
+    <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm relative overflow-hidden flex flex-col justify-between group">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl group-hover:bg-primary/10 transition-colors duration-500"></div>
+            <div>
+                <h2 class="text-3xl font-extrabold tracking-tight mb-2">Umumiy ko'rinish</h2>
+                <p class="text-on-surface-variant max-w-md">Bu oy sizda {{ active_projects_this_month }} ta faol loyiha mavjud.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mt-10">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Faol ishlar</p>
+                    <p class="text-4xl font-headline font-bold text-primary">{{ active_jobs_count }}</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Sarflangan summa</p>
+                    <p class="text-4xl font-headline font-bold text-on-surface">${{ spent_total|floatformat:0 }}</p>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Kutilayotgan takliflar</p>
+                    <p class="text-4xl font-headline font-bold text-tertiary">{{ pending_proposals_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="md:col-span-4 bg-primary-container text-white rounded-xl p-8 flex flex-col justify-between shadow-lg shadow-primary/20 bg-gradient-to-br from-primary to-primary-container">
+            <div>
+                <span class="material-symbols-outlined text-4xl mb-4">rocket_launch</span>
+                <h3 class="text-2xl font-bold font-headline leading-tight">Maqsadingizni kengaytiring</h3>
+                <p class="mt-2 text-primary-fixed/80 text-sm leading-relaxed">Keyingi loyihangiz uchun mos freelancer toping.</p>
+            </div>
+            <a href="{% url 'post_job' %}"
+                class="w-full text-center bg-white text-primary font-bold py-3 px-6 rounded-full mt-6 active:scale-95 transition-transform">
+                Yangi ish joylash
+            </a>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        {# ── Pending proposals ─────────────────────────────── #}
+        <section class="lg:col-span-2 space-y-4">
+            <div class="flex justify-between items-end mb-2">
+                <h3 class="text-xl font-bold tracking-tight">Kelayotgan takliflar</h3>
+                <span class="text-sm text-slate-500">{{ pending_proposals_count }} ta kutilmoqda</span>
+            </div>
+
+            {% if pending_proposals %}
+            <div class="space-y-4">
+                {% for p in pending_proposals %}
+                <div class="bg-surface-container-lowest p-6 rounded-xl hover:bg-surface-container-low transition-colors flex flex-col md:flex-row md:items-start justify-between gap-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-primary">person</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-on-surface">{{ p.freelancer.username }}</h4>
+                            <p class="text-xs text-on-surface-variant font-medium">Ish: {{ p.job.title }}</p>
+                            <p class="text-sm text-on-surface-variant mt-2 line-clamp-2">{{ p.cover_letter }}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-3 shrink-0">
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400 uppercase font-bold tracking-tighter">Taklif narxi</p>
+                            <p class="font-bold text-primary">${{ p.proposed_rate|floatformat:0 }}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <form method="post" action="{% url 'accept_proposal' p.id %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="px-4 py-2 rounded-full bg-primary text-on-primary text-xs font-bold active:scale-95 transition-transform">
+                                    Qabul
+                                </button>
+                            </form>
+                            <form method="post" action="{% url 'reject_proposal' p.id %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="px-4 py-2 rounded-full bg-surface-container text-on-surface text-xs font-bold active:scale-95 transition-transform">
+                                    Rad
+                                </button>
+                            </form>
+                        </div>
+                        <a href="{% url 'view_proposals' p.job.id %}"
+                            class="text-xs text-primary font-semibold hover:underline">
+                            Barchasini ko'rish →
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="bg-surface-container-lowest rounded-2xl p-8 text-on-surface-variant text-center">
+                <span class="material-symbols-outlined text-4xl text-outline mb-2 block">inbox</span>
+                Hozircha kelayotgan takliflar yo'q.
+            </div>
+            {% endif %}
+        </section>
+
+        {# ── Right sidebar ─────────────────────────────────── #}
+        <aside class="space-y-8">
+
+            {# My Jobs #}
+            <div>
+                <div class="flex justify-between items-end mb-4">
+                    <h3 class="text-lg font-bold">Mening ishlarim</h3>
+                    <a class="text-primary text-sm font-bold" href="{% url 'post_job' %}">+ Yangi</a>
+                </div>
+                <div class="bg-surface-container-low rounded-2xl p-4 space-y-4">
+                    {% for job in my_jobs|slice:":5" %}
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            {% if job.status == 'open' %}
+                            <span class="w-2 h-2 rounded-full bg-green-500 shrink-0"></span>
+                            <span class="text-[10px] font-bold text-green-600 uppercase tracking-widest">OCHIQ</span>
+                            {% elif job.status == 'in_progress' %}
+                            <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
+                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">JARAYONDA</span>
+                            {% elif job.status == 'completed' %}
+                            <span class="w-2 h-2 rounded-full bg-slate-400 shrink-0"></span>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">YAKUNLANGAN</span>
+                            {% else %}
+                            <span class="w-2 h-2 rounded-full bg-red-400 shrink-0"></span>
+                            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">YOPILGAN</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'job_detail' job.id %}" class="font-bold leading-tight hover:text-primary transition-colors block text-sm">
+                            {{ job.title }}
+                        </a>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-500">
+                                {{ job.proposal_set.count }} ta taklif
+                            </span>
+                            <a href="{% url 'view_proposals' job.id %}"
+                                class="text-[10px] text-primary font-semibold">
+                                Ko'rish →
+                            </a>
+                        </div>
+                    </div>
+                    {% if not forloop.last %}
+                    <div class="border-t border-outline-variant/15"></div>
+                    {% endif %}
+                    {% empty %}
+                    <p class="text-sm text-on-surface-variant">Hali ish joylashtirilmagan.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# Active contracts #}
+            <div>
+                <div class="flex justify-between items-end mb-4">
+                    <h3 class="text-lg font-bold">Faol shartnomalar</h3>
+                    <a class="text-primary text-sm font-bold" href="{% url 'my_contracts' %}">Hammasi</a>
+                </div>
+                <div class="bg-surface-dim rounded-2xl p-4 space-y-4">
+                    {% for c in my_contracts|slice:":3" %}
+                    <a href="{% url 'contract_detail' c.id %}" class="block space-y-1 hover:opacity-75 transition-opacity">
+                        <div class="text-sm font-bold text-on-surface">{{ c.job.title }}</div>
+                        <div class="flex justify-between text-xs text-on-surface-variant">
+                            <span>{{ c.freelancer.username }}</span>
+                            <span class="font-semibold text-primary">${{ c.amount|floatformat:0 }}</span>
+                        </div>
+                        <span class="inline-block text-[10px] font-bold uppercase px-2 py-0.5 rounded-full
+                            {% if c.status == 'active' %}bg-blue-100 text-blue-700
+                            {% elif c.status == 'completed' %}bg-green-100 text-green-700
+                            {% else %}bg-red-100 text-red-600{% endif %}">
+                            {{ c.status }}
+                        </span>
+                    </a>
+                    {% if not forloop.last %}
+                    <div class="border-t border-outline-variant/15"></div>
+                    {% endif %}
+                    {% empty %}
+                    <p class="text-sm text-on-surface-variant">Hali shartnomalar yo'q.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </aside>
+    </div>
+</main>
+
+<nav class="md:hidden fixed bottom-0 w-full bg-white dark:bg-slate-950 border-t border-blue-100/20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl z-50 flex justify-around items-center px-4 pb-4 pt-2">
+    <a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 rounded-xl px-5 py-2 active:scale-90 transition-transform"
+        href="{% url 'client_dashboard' %}">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Panel</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+        href="{% url 'job_list' %}">
+        <span class="material-symbols-outlined">search</span>
+        <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Ishlar</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+        href="{% url 'inbox' %}">
+        <span class="material-symbols-outlined">chat_bubble</span>
+        <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Xabarlar</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 active:scale-90 transition-transform hover:text-blue-600"
+        href="{% url 'profile_settings' %}">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[11px] font-semibold font-inter uppercase tracking-wider mt-1">Profil</span>
+    </a>
+</nav>
 {% endblock %}

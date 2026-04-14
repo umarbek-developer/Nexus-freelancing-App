@@ -1,3 +1,10 @@
+"""
+Review views.
+
+Fix #7 — rating: prevent ValueError on non-numeric input, validate 1–5 range.
+"""
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -5,39 +12,44 @@ from django.shortcuts import render, redirect, get_object_or_404
 from Apps.contracts.models import Contract
 from .models import Review
 
+logger = logging.getLogger(__name__)
+
 
 @login_required
 def leave_review(request, contract_pk):
-    contract = get_object_or_404(Contract, pk=contract_pk)
+    contract = get_object_or_404(
+        Contract.objects.select_related('client', 'freelancer', 'job'),
+        pk=contract_pk,
+    )
 
     if contract.client != request.user and contract.freelancer != request.user:
-        return redirect("dashboard")
+        return redirect('dashboard')
 
-    if contract.status != "completed":
-        messages.error(request, "Izoh qoldirish uchun shartnoma yakunlangan bo'lishi kerak.")
-        return redirect("contract_detail", pk=contract.pk)
+    if contract.status != 'completed':
+        messages.error(request, 'Izoh qoldirish uchun shartnoma yakunlangan bo\'lishi kerak.')
+        return redirect('contract_detail', pk=contract.pk)
 
-    if request.user == contract.client:
-        reviewee = contract.freelancer
-    else:
-        reviewee = contract.client
-
-    already_reviewed = Review.objects.filter(contract=contract, reviewer=request.user).first()
+    already_reviewed = Review.objects.filter(contract=contract, reviewer=request.user).exists()
     if already_reviewed:
-        return redirect("contract_detail", pk=contract.pk)
+        messages.info(request, 'Siz allaqachon izoh qoldirdingiz.')
+        return redirect('contract_detail', pk=contract.pk)
 
-    if request.method == "POST":
-        rating = int(request.POST.get("rating") or 5)
-        comment = (request.POST.get("comment") or "").strip()
+    reviewee = contract.freelancer if request.user == contract.client else contract.client
+
+    if request.method == 'POST':
+        # #7: safe int conversion — no ValueError crash
+        try:
+            rating = int(request.POST.get('rating', 5))
+        except (ValueError, TypeError):
+            rating = 5
+
+        # Clamp to valid range
+        rating  = max(1, min(5, rating))
+        comment = (request.POST.get('comment') or '').strip()
 
         if not comment:
-            messages.error(request, "Izoh matni bo'sh bo'lmasin.")
-            return redirect("leave_review", contract_pk=contract.pk)
-
-        if rating < 1:
-            rating = 1
-        if rating > 5:
-            rating = 5
+            messages.error(request, 'Izoh matni bo\'sh bo\'lmasin.')
+            return render(request, 'leave-review.html', {'contract': contract})
 
         Review.objects.create(
             contract=contract,
@@ -46,7 +58,11 @@ def leave_review(request, contract_pk):
             rating=rating,
             comment=comment,
         )
-        messages.success(request, "Izoh saqlandi.")
-        return redirect("contract_detail", pk=contract.pk)
+        logger.info(
+            'Review created: contract=%s reviewer=%s rating=%s',
+            contract.pk, request.user.pk, rating,
+        )
+        messages.success(request, 'Izoh saqlandi.')
+        return redirect('contract_detail', pk=contract.pk)
 
-    return render(request, "leave-review.html", {"contract": contract})
+    return render(request, 'leave-review.html', {'contract': contract})

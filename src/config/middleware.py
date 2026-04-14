@@ -32,4 +32,12 @@ class LoginRequiredMiddleware:
         if path.startswith('/media/'):
             return self.get_response(request)
 
-        return redirect('register')
+        # API endpoints use JWT — do not redirect, let DRF return 401
+        if path.startswith('/api/'):
+            return self.get_response(request)
+
+        # Wallet / withdrawal pages are protected by @login_required
+        if path.startswith('/wallet/'):
+            return self.get_response(request)
+
+        return redirect('login')

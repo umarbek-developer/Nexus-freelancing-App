@@ -11,7 +11,7 @@ class User(AbstractUser):
     FREELANCER = 'freelancer'
     CLIENT = 'client'
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='client')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='client', db_index=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
