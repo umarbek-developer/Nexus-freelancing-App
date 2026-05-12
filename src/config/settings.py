@@ -1,9 +1,3 @@
-"""
-Django settings for The Nexus Freelancing Platform.
-
-Production checklist: https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-All secrets are loaded from .env via python-decouple.
-"""
 import os
 import logging
 from pathlib import Path
